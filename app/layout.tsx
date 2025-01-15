@@ -1,26 +1,19 @@
-import './globals.css';
-import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
-import { ThemeProvider } from '@/components/theme-provider';
-import { Toaster } from '@/components/ui/toaster';
-import Header from '@/components/layout/header';
-import Footer from '@/components/layout/footer';
+import './globals.css'
+import { Inter } from 'next/font/google'
+import { ThemeProvider } from '@/components/theme-provider'
+import { Toaster } from '@/components/ui/toaster'
+import Header from '@/components/layout/header'
+import Footer from '@/components/layout/footer'
+import { metadata } from "./metadata"
 
-const inter = Inter({ subsets: ['latin'] });
+const inter = Inter({ subsets: ['latin'] })
 
-export const metadata: Metadata = {
-  title: {
-    default: 'ChemLab Synthesis | High-Quality Chemical Products',
-    template: '%s | ChemLab Synthesis'
-  },
-  description: 'Your trusted source for high-quality chemical products, laboratory supplies, and research materials.',
-  metadataBase: new URL('https://www.chemlabsynthesis.com'),
-};
+export { metadata }
 
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode;
+  children: React.ReactNode
 }) {
   return (
     <html lang="en">
@@ -35,5 +28,5 @@ export default function RootLayout({
         <Toaster />
       </body>
     </html>
-  );
+  )
 }
