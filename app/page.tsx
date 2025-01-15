@@ -4,6 +4,8 @@ import Image from "next/image"
 import { ArrowRight, BeakerIcon, TestTubes, ShieldCheck, Truck, Users, Scale, FlaskConical, Pipette, Microscope, Quote } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { motion } from "framer-motion"
+import { LampContainer } from "@/components/ui/lamp"
 
 export const metadata: Metadata = {
   title: {
@@ -129,40 +131,34 @@ export default function Home() {
   return (
     <main className="flex-1">
       {/* Hero Section */}
-      <section className="relative py-20 bg-gradient-to-r from-blue-600 to-blue-800 text-white overflow-hidden">
-        <div className="absolute inset-0 bg-grid-white/[0.2] bg-[size:16px_16px]" />
-        <div className="container mx-auto px-4">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div className="relative z-10">
-              <h1 className="text-5xl font-bold mb-6">
-                Your Trusted Partner for Premium Laboratory Chemicals
-              </h1>
-              <p className="text-xl mb-8 text-blue-100">
-                Authorized dealer for leading manufacturers. Serving research and educational institutions with high-quality chemicals and laboratory supplies.
-              </p>
-              <div className="flex flex-wrap gap-4">
-                <Button asChild size="lg" variant="secondary">
-                  <Link href="/products">Browse Products</Link>
-                </Button>
-                <Button asChild size="lg" variant="outline" className="bg-transparent hover:bg-blue-700">
-                  <Link href="/contact">Request Quote</Link>
-                </Button>
-              </div>
+      <section className="relative bg-slate-950 overflow-hidden">
+        <LampContainer>
+          <motion.div
+            initial={{ opacity: 0.5, y: 100 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{
+              delay: 0.3,
+              duration: 0.8,
+              ease: "easeInOut",
+            }}
+            className="text-center"
+          >
+            <h1 className="mt-8 bg-gradient-to-br from-slate-200 to-slate-400 py-4 bg-clip-text text-center text-4xl font-bold tracking-tight text-transparent md:text-7xl mb-6">
+              Your Trusted Partner for <br />Premium Laboratory Chemicals
+            </h1>
+            <p className="text-xl mb-8 text-slate-400 max-w-3xl mx-auto px-4">
+              Authorized dealer for leading manufacturers. Serving research and educational institutions with high-quality chemicals and laboratory supplies.
+            </p>
+            <div className="flex flex-wrap gap-4 justify-center">
+              <Button asChild size="lg" variant="secondary">
+                <Link href="/products">Browse Products</Link>
+              </Button>
+              <Button asChild size="lg" variant="outline" className="bg-transparent hover:bg-slate-800">
+                <Link href="/contact">Request Quote</Link>
+              </Button>
             </div>
-            <div className="relative hidden lg:block">
-              <div className="relative w-full aspect-square">
-                <Image
-                  src="/images/hero-illustration.svg"
-                  alt="Laboratory Equipment Illustration"
-                  fill
-                  className="object-contain"
-                  priority
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="absolute inset-0 bg-gradient-to-t from-blue-900/20 to-transparent" />
+          </motion.div>
+        </LampContainer>
       </section>
 
       {/* Featured Brands */}
