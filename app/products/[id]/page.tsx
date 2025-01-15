@@ -1,16 +1,41 @@
+import type { Metadata } from "next"
 import { notFound } from "next/navigation"
-import Image from "next/image"
 import Link from "next/link"
 import { Container } from "@/components/ui/container"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog"
 import { FileText, ShoppingCart } from "lucide-react"
-import { getProductById } from "@/lib/db/products"
+import { getProductById, products } from "@/lib/db/products"
+import QuoteRequestForm from "@/components/products/quote-request-form"
+import { ProductImage } from "@/components/ui/product-image"
 
 interface ProductPageProps {
   params: {
     id: string
+  }
+}
+
+export function generateStaticParams() {
+  return products.map((product) => ({
+    id: product.id,
+  }))
+}
+
+export function generateMetadata({ params }: ProductPageProps): Metadata {
+  const product = getProductById(params.id)
+
+  if (!product) {
+    return {
+      title: "Product Not Found",
+      description: "The requested product could not be found.",
+    }
+  }
+
+  return {
+    title: `${product.name} | ChemLab Synthesis`,
+    description: `${product.description}`,
   }
 }
 
@@ -26,20 +51,10 @@ export default function ProductPage({ params }: ProductPageProps) {
       <Container>
         <div className="grid gap-8 py-8 md:grid-cols-2">
           {/* Product Image */}
-          <div className="relative aspect-square rounded-lg border bg-background">
-            {product.imageUrl ? (
-              <Image
-                src={product.imageUrl}
-                alt={product.name}
-                fill
-                className="object-contain p-4"
-              />
-            ) : (
-              <div className="flex h-full items-center justify-center">
-                No image available
-              </div>
-            )}
-          </div>
+          <ProductImage
+            image={product.imageUrl}
+            name={product.name}
+          />
 
           {/* Product Info */}
           <div className="space-y-6">
@@ -100,10 +115,27 @@ export default function ProductPage({ params }: ProductPageProps) {
                   Download MSDS
                 </Link>
               </Button>
-              <Button className="flex-1">
-                <ShoppingCart className="mr-2 h-4 w-4" />
-                Request Quote
-              </Button>
+              <Dialog>
+                <DialogTrigger asChild>
+                  <Button className="flex-1">
+                    <ShoppingCart className="mr-2 h-4 w-4" />
+                    Request Quote
+                  </Button>
+                </DialogTrigger>
+                <DialogContent className="sm:max-w-[500px]">
+                  <div className="space-y-6 pt-4">
+                    <div>
+                      <h3 className="text-lg font-semibold">
+                        Request Quote for {product.name}
+                      </h3>
+                      <p className="text-sm text-muted-foreground">
+                        Fill out the form below and we'll get back to you with a quote.
+                      </p>
+                    </div>
+                    <QuoteRequestForm product={product} />
+                  </div>
+                </DialogContent>
+              </Dialog>
             </div>
           </div>
         </div>

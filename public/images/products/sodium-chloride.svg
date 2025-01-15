@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="400" height="400" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="400" height="400" fill="#F8FAFC"/>
+  
+  <!-- Crystal structure -->
+  <g transform="translate(200 200)">
+    <!-- Sodium ion (Na+) -->
+    <circle cx="0" cy="0" r="40" fill="#64748B" stroke="#0F172A" stroke-width="4"/>
+    <text x="0" y="8" font-family="monospace" font-size="24" fill="white" text-anchor="middle">Na⁺</text>
+    
+    <!-- Chloride ions (Cl-) -->
+    <circle cx="80" cy="0" r="40" fill="#94A3B8" stroke="#0F172A" stroke-width="4"/>
+    <text x="80" y="8" font-family="monospace" font-size="24" fill="white" text-anchor="middle">Cl⁻</text>
+    
+    <circle cx="-80" cy="0" r="40" fill="#94A3B8" stroke="#0F172A" stroke-width="4"/>
+    <text x="-80" y="8" font-family="monospace" font-size="24" fill="white" text-anchor="middle">Cl⁻</text>
+    
+    <circle cx="0" cy="80" r="40" fill="#94A3B8" stroke="#0F172A" stroke-width="4"/>
+    <text x="0" y="88" font-family="monospace" font-size="24" fill="white" text-anchor="middle">Cl⁻</text>
+    
+    <circle cx="0" cy="-80" r="40" fill="#94A3B8" stroke="#0F172A" stroke-width="4"/>
+    <text x="0" y="-72" font-family="monospace" font-size="24" fill="white" text-anchor="middle">Cl⁻</text>
+  </g>
+  
+  <!-- Chemical formula -->
+  <text x="200" y="350" font-family="monospace" font-size="24" fill="#0F172A" text-anchor="middle">NaCl</text>
+  
+  <!-- Product name -->
+  <text x="200" y="50" font-family="sans-serif" font-size="28" font-weight="bold" fill="#0F172A" text-anchor="middle">Sodium Chloride</text>
+</svg> 

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="400" height="400" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="400" height="400" fill="#F8FAFC"/>
+  
+  <!-- Container -->
+  <rect x="120" y="120" width="160" height="200" fill="#E2E8F0" stroke="#0F172A" stroke-width="8"/>
+  
+  <!-- Crystals -->
+  <path d="M160 180L180 160L200 180L220 160L240 180" stroke="#7C3AED" stroke-width="4"/>
+  <path d="M140 220L160 200L180 220L200 200L220 220L240 200L260 220" stroke="#7C3AED" stroke-width="4"/>
+  <path d="M160 260L180 240L200 260L220 240L240 260" stroke="#7C3AED" stroke-width="4"/>
+  
+  <!-- Chemical formula -->
+  <text x="200" y="350" font-family="monospace" font-size="24" fill="#0F172A" text-anchor="middle">KMnO₄</text>
+  
+  <!-- Product name -->
+  <text x="200" y="50" font-family="sans-serif" font-size="28" font-weight="bold" fill="#0F172A" text-anchor="middle">Potassium</text>
+  <text x="200" y="85" font-family="sans-serif" font-size="28" font-weight="bold" fill="#0F172A" text-anchor="middle">Permanganate</text>
+</svg> 

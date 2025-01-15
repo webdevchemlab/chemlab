@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="400" height="400" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="400" height="400" fill="#F8FAFC"/>
+  
+  <!-- Flask -->
+  <path d="M180 80V180L140 300H260L220 180V80H180Z" stroke="#0F172A" stroke-width="8" fill="#E2E8F0"/>
+  
+  <!-- Flask neck -->
+  <rect x="180" y="40" width="40" height="40" fill="#E2E8F0" stroke="#0F172A" stroke-width="8"/>
+  
+  <!-- Calibration mark -->
+  <line x1="140" y1="200" x2="260" y2="200" stroke="#0F172A" stroke-width="2"/>
+  <circle cx="200" cy="200" r="4" fill="#0F172A"/>
+  
+  <!-- Volume marking -->
+  <text x="280" y="205" font-family="monospace" font-size="16" fill="#0F172A">1000 mL</text>
+  
+  <!-- Class A marking -->
+  <text x="200" y="150" font-family="monospace" font-size="20" fill="#0F172A" text-anchor="middle">Class A</text>
+  
+  <!-- Product name -->
+  <text x="200" y="350" font-family="sans-serif" font-size="28" font-weight="bold" fill="#0F172A" text-anchor="middle">Volumetric Flask</text>
+</svg> 

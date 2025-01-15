@@ -28,7 +28,7 @@ export const products: Product[] = [
       "Extraction procedures"
     ],
     msdsUrl: "/msds/methanol.pdf",
-    imageUrl: "/images/products/methanol.png",
+    imageUrl: "/images/products/methanol.svg",
     inStock: true,
     featured: true
   },
@@ -57,7 +57,7 @@ export const products: Product[] = [
       "General laboratory use"
     ],
     msdsUrl: "/msds/sodium-chloride.pdf",
-    imageUrl: "/images/products/sodium-chloride.png",
+    imageUrl: "/images/products/sodium-chloride.svg",
     inStock: true
   },
   {
@@ -85,7 +85,144 @@ export const products: Product[] = [
       "Organic synthesis"
     ],
     msdsUrl: "/msds/acetonitrile.pdf",
-    imageUrl: "/images/products/acetonitrile.png",
+    imageUrl: "/images/products/acetonitrile.svg",
+    inStock: true,
+    featured: true
+  },
+  {
+    id: "4",
+    name: "Sulfuric Acid",
+    casNumber: "7664-93-9",
+    manufacturer: "Merck",
+    description: "High-quality sulfuric acid for analytical and laboratory applications.",
+    category: "reagents",
+    purity: "95-97%",
+    grade: "ACS Reagent",
+    packagingSizes: [
+      { id: "4-1", size: "500", unit: "mL", sku: "S1234-500ML" },
+      { id: "4-2", size: "2.5", unit: "L", sku: "S1234-2.5L" }
+    ],
+    specifications: [
+      "Assay 95-97%",
+      "Chloride (Cl) ≤0.2 ppm",
+      "Heavy metals (as Pb) ≤0.5 ppm"
+    ],
+    applications: [
+      "Analytical chemistry",
+      "pH adjustment",
+      "Industrial processes"
+    ],
+    msdsUrl: "/msds/sulfuric-acid.pdf",
+    imageUrl: "/images/products/sulfuric-acid.svg",
+    inStock: true
+  },
+  {
+    id: "5",
+    name: "Toluene",
+    casNumber: "108-88-3",
+    manufacturer: "Sigma-Aldrich",
+    description: "High-purity toluene suitable for HPLC and spectroscopy applications.",
+    category: "solvents",
+    purity: "≥99.9%",
+    grade: "HPLC",
+    packagingSizes: [
+      { id: "5-1", size: "1", unit: "L", sku: "T1234-1L" },
+      { id: "5-2", size: "2.5", unit: "L", sku: "T1234-2.5L" }
+    ],
+    specifications: [
+      "Purity (GC) ≥99.9%",
+      "Water ≤0.03%",
+      "Acidity/alkalinity ≤0.0002 meq/g"
+    ],
+    applications: [
+      "HPLC applications",
+      "Spectroscopy",
+      "Organic synthesis"
+    ],
+    msdsUrl: "/msds/toluene.pdf",
+    imageUrl: "/images/products/toluene.svg",
+    inStock: true
+  },
+  {
+    id: "6",
+    name: "Volumetric Flask",
+    casNumber: "N/A",
+    manufacturer: "Borosil",
+    description: "Class A borosilicate glass volumetric flask with excellent accuracy.",
+    category: "laboratory-glassware",
+    grade: "Class A",
+    packagingSizes: [
+      { id: "6-1", size: "100", unit: "mL", sku: "VF100-B" },
+      { id: "6-2", size: "250", unit: "mL", sku: "VF250-B" },
+      { id: "6-3", size: "500", unit: "mL", sku: "VF500-B" },
+      { id: "6-4", size: "1000", unit: "mL", sku: "VF1000-B" }
+    ],
+    specifications: [
+      "Borosilicate glass",
+      "Class A accuracy",
+      "Calibrated at 20°C",
+      "Includes stopper"
+    ],
+    applications: [
+      "Precise volume measurements",
+      "Solution preparation",
+      "Analytical procedures"
+    ],
+    msdsUrl: "/msds/borosilicate-glass.pdf",
+    imageUrl: "/images/products/volumetric-flask.svg",
+    inStock: true
+  },
+  {
+    id: "7",
+    name: "Potassium Permanganate",
+    casNumber: "7722-64-7",
+    manufacturer: "SRL",
+    description: "High-purity potassium permanganate for analytical and oxidation reactions.",
+    category: "inorganic-chemicals",
+    purity: "≥99%",
+    grade: "AR Grade",
+    packagingSizes: [
+      { id: "7-1", size: "100", unit: "g", sku: "PP100-S" },
+      { id: "7-2", size: "500", unit: "g", sku: "PP500-S" }
+    ],
+    specifications: [
+      "Assay ≥99%",
+      "Chloride (Cl) ≤0.001%",
+      "Sulfate (SO4) ≤0.02%"
+    ],
+    applications: [
+      "Oxidation reactions",
+      "Water treatment",
+      "Analytical chemistry"
+    ],
+    msdsUrl: "/msds/potassium-permanganate.pdf",
+    imageUrl: "/images/products/potassium-permanganate.svg",
+    inStock: true
+  },
+  {
+    id: "8",
+    name: "pH Buffer Solution Set",
+    casNumber: "N/A",
+    manufacturer: "Thermo Fisher",
+    description: "Certified pH buffer solutions for precise pH meter calibration.",
+    category: "analytical-standards",
+    grade: "Certified Reference",
+    packagingSizes: [
+      { id: "8-1", size: "500", unit: "mL", sku: "PBS-SET" }
+    ],
+    specifications: [
+      "pH 4.01 ±0.02",
+      "pH 7.00 ±0.02",
+      "pH 10.01 ±0.02",
+      "NIST traceable"
+    ],
+    applications: [
+      "pH meter calibration",
+      "Quality control",
+      "Research applications"
+    ],
+    msdsUrl: "/msds/ph-buffers.pdf",
+    imageUrl: "/images/products/ph-buffer.svg",
     inStock: true,
     featured: true
   }
