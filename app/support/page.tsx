@@ -1,6 +1,7 @@
 import { Container } from "@/components/ui/container";
 import { Mail, Phone, Clock, FileText, MessagesSquare, Headphones } from "lucide-react";
 import Link from "next/link";
+import { SupportForm } from "@/components/forms/support-form";
 
 export const metadata = {
   title: "Technical Support",
@@ -50,6 +51,14 @@ export default function TechnicalSupport() {
                 <Clock className="h-4 w-4 inline mr-2" />
                 Monday - Friday, 9:00 AM - 5:00 PM EST
               </p>
+            </div>
+          </div>
+
+          {/* Support Form */}
+          <div className="mb-12">
+            <h2 className="text-2xl font-bold mb-6">Contact Form</h2>
+            <div className="border rounded-lg p-6 bg-white">
+              <SupportForm />
             </div>
           </div>
 
