@@ -1,138 +1,147 @@
-import type { Metadata } from "next"
-import { ProductDetails } from "@/components/products/product-details"
+import { notFound } from "next/navigation"
+import Image from "next/image"
+import Link from "next/link"
+import { Container } from "@/components/ui/container"
+import { Button } from "@/components/ui/button"
+import { Badge } from "@/components/ui/badge"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { FileText, ShoppingCart } from "lucide-react"
+import { getProductById } from "@/lib/db/products"
 
-export interface Product {
-  id: string;
-  name: string;
-  casNumber: string;
-  manufacturer: string;
-  purity: string;
-  grade: string;
-  category: string;
-  price: string;
-  packSize: string;
-  molecularFormula: string;
-  molecularWeight: string;
-  specifications: {
-    appearance: string;
-    solubility: string;
-    ph: string;
-    density: string;
-    meltingPoint: string;
-    boilingPoint: string;
-  };
-  safetyInfo: {
-    hazards: string[];
-    precautions: string[];
-    storage: string[];
-  };
-  packagingOptions: {
-    size: string;
-    price: string;
-  }[];
-  documents: {
-    name: string;
-    url: string;
-    type: "SDS" | "COA" | "Specification" | "Technical Data" | "Other";
-    fileSize?: string;
-  }[];
-}
-
-const products: Product[] = [
-  {
-    id: "1",
-    name: "Sodium Chloride",
-    casNumber: "7647-14-5",
-    manufacturer: "Sigma-Aldrich",
-    purity: "99.5%",
-    grade: "ACS Reagent",
-    category: "Inorganic Salts",
-    price: "45.00",
-    packSize: "500g",
-    molecularFormula: "NaCl",
-    molecularWeight: "58.44 g/mol",
-    specifications: {
-      appearance: "White crystalline solid",
-      solubility: "360 g/L in water at 20°C",
-      ph: "5.0-8.0 (5% solution)",
-      density: "2.17 g/cm³",
-      meltingPoint: "801°C",
-      boilingPoint: "1413°C"
-    },
-    safetyInfo: {
-      hazards: ["May cause eye irritation", "May cause respiratory irritation"],
-      precautions: ["Wear protective gloves", "Use in well-ventilated area"],
-      storage: ["Store in a dry place", "Keep container tightly closed"]
-    },
-    packagingOptions: [
-      { size: "100g", price: "12.00" },
-      { size: "500g", price: "45.00" },
-      { size: "1kg", price: "80.00" }
-    ],
-    documents: [
-      { name: "Safety Data Sheet", url: "/docs/sds-nacl.pdf", type: "SDS", fileSize: "2.1 MB" },
-      { name: "Certificate of Analysis", url: "/docs/coa-nacl.pdf", type: "COA", fileSize: "1.5 MB" }
-    ]
-  },
-  {
-    id: "2",
-    name: "Potassium Chloride",
-    casNumber: "7647-14-5",
-    manufacturer: "Sigma-Aldrich",
-    purity: "99.5%",
-    grade: "ACS Reagent",
-    category: "Inorganic Salts",
-    price: "45.00",
-    packSize: "500g",
-    molecularFormula: "NaCl",
-    molecularWeight: "58.44 g/mol",
-    specifications: {
-      appearance: "White crystalline solid",
-      solubility: "360 g/L in water at 20°C",
-      ph: "5.0-8.0 (5% solution)",
-      density: "2.17 g/cm³",
-      meltingPoint: "801°C",
-      boilingPoint: "1413°C"
-    },
-    safetyInfo: {
-      hazards: ["May cause eye irritation", "May cause respiratory irritation"],
-      precautions: ["Wear protective gloves", "Use in well-ventilated area"],
-      storage: ["Store in a dry place", "Keep container tightly closed"]
-    },
-    packagingOptions: [
-      { size: "100g", price: "12.00" },
-      { size: "500g", price: "45.00" },
-      { size: "1kg", price: "80.00" }
-    ],
-    documents: [
-      { name: "Safety Data Sheet", url: "/docs/sds-kcl.pdf", type: "SDS", fileSize: "2.1 MB" },
-      { name: "Certificate of Analysis", url: "/docs/coa-kcl.pdf", type: "COA", fileSize: "1.5 MB" }
-    ]
-  }
-]
-
-export async function generateStaticParams() {
-  return products.map((product) => ({
-    id: product.id,
-  }))
-}
-
-export async function generateMetadata({ params }: { params: { id: string } }): Promise<Metadata> {
-  const product = products.find(p => p.id === params.id) || products[0]
-  
-  return {
-    title: `${product.name} | ChemLab Synthesis`,
-    description: `Buy ${product.name} (${product.casNumber}) - ${product.grade} grade, ${product.purity} purity. Available in various pack sizes from ${product.manufacturer}.`,
-    keywords: `${product.name}, ${product.casNumber}, ${product.category}, ${product.manufacturer}, chemical supplier`,
-    openGraph: {
-      title: `${product.name} | ChemLab Synthesis`,
-      description: `Buy ${product.name} (${product.casNumber}) - ${product.grade} grade, ${product.purity} purity.`,
-      type: "website",
-    },
+interface ProductPageProps {
+  params: {
+    id: string
   }
 }
 
-export default function ProductPage({ params }: { params: { id: string } }) {
-  const product = products.find(p => p.id === params.id) || products[0]
-  return <ProductDetails product={product} />
+export default function ProductPage({ params }: ProductPageProps) {
+  const product = getProductById(params.id)
+
+  if (!product) {
+    notFound()
+  }
+
+  return (
+    <div className="flex-1">
+      <Container>
+        <div className="grid gap-8 py-8 md:grid-cols-2">
+          {/* Product Image */}
+          <div className="relative aspect-square rounded-lg border bg-background">
+            {product.imageUrl ? (
+              <Image
+                src={product.imageUrl}
+                alt={product.name}
+                fill
+                className="object-contain p-4"
+              />
+            ) : (
+              <div className="flex h-full items-center justify-center">
+                No image available
+              </div>
+            )}
+          </div>
+
+          {/* Product Info */}
+          <div className="space-y-6">
+            <div className="space-y-2">
+              <div className="flex items-center gap-2">
+                <h1 className="text-3xl font-bold">{product.name}</h1>
+                {product.featured && (
+                  <Badge variant="secondary">Featured</Badge>
+                )}
+              </div>
+              <p className="text-lg text-muted-foreground">
+                CAS: {product.casNumber}
+              </p>
+            </div>
+
+            <div className="space-y-2">
+              <div className="flex justify-between">
+                <span className="font-medium">Manufacturer</span>
+                <span>{product.manufacturer}</span>
+              </div>
+              {product.purity && (
+                <div className="flex justify-between">
+                  <span className="font-medium">Purity</span>
+                  <span>{product.purity}</span>
+                </div>
+              )}
+              {product.grade && (
+                <div className="flex justify-between">
+                  <span className="font-medium">Grade</span>
+                  <span>{product.grade}</span>
+                </div>
+              )}
+            </div>
+
+            <div className="space-y-4">
+              <h3 className="font-medium">Available Packaging Sizes</h3>
+              <div className="grid grid-cols-3 gap-4">
+                {product.packagingSizes.map((size) => (
+                  <div
+                    key={size.id}
+                    className="flex flex-col items-center rounded-lg border p-4"
+                  >
+                    <span className="text-lg font-medium">
+                      {size.size} {size.unit}
+                    </span>
+                    <span className="text-sm text-muted-foreground">
+                      SKU: {size.sku}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="flex gap-4">
+              <Button asChild variant="outline" className="flex-1">
+                <Link href={product.msdsUrl} target="_blank">
+                  <FileText className="mr-2 h-4 w-4" />
+                  Download MSDS
+                </Link>
+              </Button>
+              <Button className="flex-1">
+                <ShoppingCart className="mr-2 h-4 w-4" />
+                Request Quote
+              </Button>
+            </div>
+          </div>
+        </div>
+
+        {/* Product Details Tabs */}
+        <div className="py-8">
+          <Tabs defaultValue="description">
+            <TabsList>
+              <TabsTrigger value="description">Description</TabsTrigger>
+              <TabsTrigger value="specifications">Specifications</TabsTrigger>
+              <TabsTrigger value="applications">Applications</TabsTrigger>
+            </TabsList>
+            <TabsContent value="description" className="mt-4">
+              <div className="prose max-w-none">
+                <p>{product.description}</p>
+              </div>
+            </TabsContent>
+            <TabsContent value="specifications" className="mt-4">
+              <div className="prose max-w-none">
+                <ul>
+                  {product.specifications?.map((spec, index) => (
+                    <li key={index}>{spec}</li>
+                  ))}
+                </ul>
+              </div>
+            </TabsContent>
+            <TabsContent value="applications" className="mt-4">
+              <div className="prose max-w-none">
+                <ul>
+                  {product.applications?.map((app, index) => (
+                    <li key={index}>{app}</li>
+                  ))}
+                </ul>
+              </div>
+            </TabsContent>
+          </Tabs>
+        </div>
+      </Container>
+    </div>
+  )
 } 
