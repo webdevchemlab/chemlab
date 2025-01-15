@@ -32,6 +32,12 @@ export default function Header() {
               Brands
             </Link>
             <Link
+              href="/industries"
+              className={pathname === "/industries" ? "text-foreground" : "text-foreground/60 transition-colors hover:text-foreground"}
+            >
+              Industries
+            </Link>
+            <Link
               href="/about"
               className={pathname === "/about" ? "text-foreground" : "text-foreground/60 transition-colors hover:text-foreground"}
             >
