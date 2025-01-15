@@ -1,202 +1,146 @@
-"use client"
+import { ProductDetails } from "@/components/products/product-details"
 
-import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { BeakerIcon, Download, FileText, Info, ShieldAlert } from "lucide-react";
-
-// Mock data - replace with actual data fetching
-const product = {
-  id: "1",
-  name: "Sodium Chloride",
-  casNumber: "7647-14-5",
-  manufacturer: "Merck",
-  purity: "99.5%",
-  grade: "ACS",
-  category: "Inorganic Chemicals",
-  description: "High purity sodium chloride suitable for analytical and laboratory use. Meets ACS specifications.",
-  specifications: {
-    appearance: "White crystalline powder",
+// Mock data - replace with actual data from your backend
+const products = [
+  {
+    id: "1",
+    name: "Sodium Chloride",
+    casNumber: "7647-14-5",
+    manufacturer: "Sigma Aldrich",
+    purity: "99.5%",
+    grade: "ACS",
+    category: "Inorganic Chemicals",
+    price: "$45.00",
+    packSize: "500g",
     molecularFormula: "NaCl",
     molecularWeight: "58.44 g/mol",
-    meltingPoint: "801°C",
-    boilingPoint: "1413°C",
-    density: "2.17 g/cm³",
-    solubility: "Soluble in water",
-  },
-  packagingSizes: [
-    { size: "500g", sku: "NaCl-500" },
-    { size: "1kg", sku: "NaCl-1000" },
-    { size: "5kg", sku: "NaCl-5000" },
-  ],
-  safetyInfo: {
-    hazardStatements: [
-      "H319 - Causes serious eye irritation",
+    description: "High purity sodium chloride suitable for analytical and laboratory use. Meets American Chemical Society (ACS) specifications.",
+    specifications: {
+      appearance: "White crystalline powder",
+      solubility: "Soluble in water",
+      ph: "5.0-8.0 (5% solution)",
+      density: "2.17 g/cm³",
+      meltingPoint: "801°C",
+      boilingPoint: "1413°C"
+    },
+    safetyInfo: {
+      hazardStatements: [
+        "H319 - Causes serious eye irritation"
+      ],
+      precautionaryStatements: [
+        "P264 - Wash hands thoroughly after handling",
+        "P280 - Wear protective gloves/protective clothing/eye protection/face protection",
+        "P305+P351+P338 - IF IN EYES: Rinse cautiously with water for several minutes"
+      ],
+      storage: "Store in a dry place. Keep container tightly closed.",
+      disposal: "Dispose of contents/container in accordance with local/regional/national regulations."
+    },
+    packagingOptions: [
+      { size: "500g", price: "$45.00" },
+      { size: "1kg", price: "$80.00" },
+      { size: "2.5kg", price: "$175.00" }
     ],
-    precautionaryStatements: [
-      "P264 - Wash hands thoroughly after handling",
-      "P280 - Wear protective gloves/protective clothing/eye protection/face protection",
-    ],
-    storage: "Store in a dry place. Keep container tightly closed.",
+    documents: {
+      sds: "/documents/sodium-chloride-sds.pdf",
+      coa: "/documents/sodium-chloride-coa.pdf",
+      specification: "/documents/sodium-chloride-spec.pdf"
+    }
   },
-};
+  {
+    id: "2",
+    name: "Ethanol",
+    casNumber: "64-17-5",
+    manufacturer: "Merck",
+    purity: "99.9%",
+    grade: "HPLC",
+    category: "Solvents",
+    price: "$52.00",
+    packSize: "1L",
+    molecularFormula: "C2H5OH",
+    molecularWeight: "46.07 g/mol",
+    description: "High purity ethanol suitable for HPLC applications. Low water content and residue.",
+    specifications: {
+      appearance: "Clear colorless liquid",
+      solubility: "Miscible with water",
+      density: "0.789 g/cm³",
+      boilingPoint: "78.3°C",
+      purity: "≥99.9%"
+    },
+    safetyInfo: {
+      hazardStatements: [
+        "H225 - Highly flammable liquid and vapor"
+      ],
+      precautionaryStatements: [
+        "P210 - Keep away from heat/sparks/open flames/hot surfaces",
+        "P233 - Keep container tightly closed",
+        "P403 - Store in a well-ventilated place"
+      ],
+      storage: "Store in a cool, well-ventilated place.",
+      disposal: "Dispose of contents/container in accordance with local regulations."
+    },
+    packagingOptions: [
+      { size: "1L", price: "$52.00" },
+      { size: "2.5L", price: "$115.00" },
+      { size: "4L", price: "$180.00" }
+    ],
+    documents: {
+      sds: "/documents/ethanol-sds.pdf",
+      coa: "/documents/ethanol-coa.pdf",
+      specification: "/documents/ethanol-spec.pdf"
+    }
+  },
+  {
+    id: "3",
+    name: "Sulfuric Acid",
+    casNumber: "7664-93-9",
+    manufacturer: "SRL",
+    purity: "98%",
+    grade: "AR",
+    category: "Acids",
+    price: "$38.00",
+    packSize: "2.5L",
+    molecularFormula: "H2SO4",
+    molecularWeight: "98.08 g/mol",
+    description: "Analytical grade sulfuric acid suitable for general laboratory use and analytical applications.",
+    specifications: {
+      appearance: "Clear colorless liquid",
+      concentration: "98%",
+      density: "1.84 g/cm³",
+      boilingPoint: "337°C",
+      meltingPoint: "10°C"
+    },
+    safetyInfo: {
+      hazardStatements: [
+        "H314 - Causes severe skin burns and eye damage"
+      ],
+      precautionaryStatements: [
+        "P280 - Wear protective gloves/protective clothing/eye protection/face protection",
+        "P301+P330+P331 - IF SWALLOWED: Rinse mouth. Do NOT induce vomiting",
+        "P305+P351+P338 - IF IN EYES: Rinse cautiously with water for several minutes"
+      ],
+      storage: "Store locked up in a well-ventilated place.",
+      disposal: "Dispose of contents/container at a licensed waste disposal facility."
+    },
+    packagingOptions: [
+      { size: "2.5L", price: "$38.00" },
+      { size: "5L", price: "$70.00" },
+      { size: "10L", price: "$130.00" }
+    ],
+    documents: {
+      sds: "/documents/sulfuric-acid-sds.pdf",
+      coa: "/documents/sulfuric-acid-coa.pdf",
+      specification: "/documents/sulfuric-acid-spec.pdf"
+    }
+  }
+]
+
+export async function generateStaticParams() {
+  return products.map((product) => ({
+    id: product.id,
+  }))
+}
 
 export default function ProductPage({ params }: { params: { id: string } }) {
-  return (
-    <div className="min-h-screen bg-background py-12">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid gap-8 lg:grid-cols-3">
-          {/* Product Overview */}
-          <div className="lg:col-span-2 space-y-8">
-            <div>
-              <h1 className="text-3xl font-bold tracking-tight text-foreground flex items-center gap-2">
-                <BeakerIcon className="h-8 w-8 text-blue-500" />
-                {product.name}
-              </h1>
-              <p className="mt-4 text-muted-foreground">{product.description}</p>
-            </div>
-
-            <Tabs defaultValue="specifications" className="w-full">
-              <TabsList className="grid w-full grid-cols-3">
-                <TabsTrigger value="specifications">Specifications</TabsTrigger>
-                <TabsTrigger value="safety">Safety Data</TabsTrigger>
-                <TabsTrigger value="documents">Documents</TabsTrigger>
-              </TabsList>
-              <TabsContent value="specifications" className="mt-6">
-                <Card>
-                  <CardHeader>
-                    <CardTitle>Technical Specifications</CardTitle>
-                    <CardDescription>Detailed product specifications and properties</CardDescription>
-                  </CardHeader>
-                  <CardContent className="space-y-4">
-                    {Object.entries(product.specifications).map(([key, value]) => (
-                      <div key={key} className="flex justify-between border-b pb-2">
-                        <span className="font-medium capitalize">{key.replace(/([A-Z])/g, " $1").trim()}:</span>
-                        <span>{value}</span>
-                      </div>
-                    ))}
-                  </CardContent>
-                </Card>
-              </TabsContent>
-              <TabsContent value="safety" className="mt-6">
-                <Card>
-                  <CardHeader>
-                    <CardTitle>Safety Information</CardTitle>
-                    <CardDescription>Important safety and handling information</CardDescription>
-                  </CardHeader>
-                  <CardContent className="space-y-6">
-                    <div>
-                      <h4 className="font-semibold mb-2">Hazard Statements</h4>
-                      <ul className="list-disc list-inside space-y-1">
-                        {product.safetyInfo.hazardStatements.map((statement, index) => (
-                          <li key={index} className="text-sm">{statement}</li>
-                        ))}
-                      </ul>
-                    </div>
-                    <div>
-                      <h4 className="font-semibold mb-2">Precautionary Statements</h4>
-                      <ul className="list-disc list-inside space-y-1">
-                        {product.safetyInfo.precautionaryStatements.map((statement, index) => (
-                          <li key={index} className="text-sm">{statement}</li>
-                        ))}
-                      </ul>
-                    </div>
-                    <div>
-                      <h4 className="font-semibold mb-2">Storage</h4>
-                      <p className="text-sm">{product.safetyInfo.storage}</p>
-                    </div>
-                  </CardContent>
-                </Card>
-              </TabsContent>
-              <TabsContent value="documents" className="mt-6">
-                <Card>
-                  <CardHeader>
-                    <CardTitle>Product Documents</CardTitle>
-                    <CardDescription>Download product related documents</CardDescription>
-                  </CardHeader>
-                  <CardContent className="space-y-4">
-                    <Button variant="outline" className="w-full justify-start">
-                      <FileText className="mr-2 h-4 w-4" />
-                      Certificate of Analysis
-                    </Button>
-                    <Button variant="outline" className="w-full justify-start">
-                      <ShieldAlert className="mr-2 h-4 w-4" />
-                      Safety Data Sheet (SDS)
-                    </Button>
-                    <Button variant="outline" className="w-full justify-start">
-                      <Info className="mr-2 h-4 w-4" />
-                      Product Specification Sheet
-                    </Button>
-                  </CardContent>
-                </Card>
-              </TabsContent>
-            </Tabs>
-          </div>
-
-          {/* Product Details Sidebar */}
-          <div className="space-y-6">
-            <Card>
-              <CardHeader>
-                <CardTitle>Product Details</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="flex justify-between">
-                  <span className="text-muted-foreground">CAS Number:</span>
-                  <span className="font-medium">{product.casNumber}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-muted-foreground">Manufacturer:</span>
-                  <span className="font-medium">{product.manufacturer}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-muted-foreground">Purity:</span>
-                  <span className="font-medium">{product.purity}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-muted-foreground">Grade:</span>
-                  <span className="font-medium">{product.grade}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-muted-foreground">Category:</span>
-                  <span className="font-medium">{product.category}</span>
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardHeader>
-                <CardTitle>Available Packaging</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                {product.packagingSizes.map((pkg) => (
-                  <div key={pkg.sku} className="flex justify-between items-center">
-                    <span>{pkg.size}</span>
-                    <Button>Request Quote</Button>
-                  </div>
-                ))}
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardHeader>
-                <CardTitle>Need Help?</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <p className="text-sm text-muted-foreground">
-                  Contact our technical support team for any questions about this product.
-                </p>
-                <Button className="w-full">Contact Support</Button>
-              </CardContent>
-            </Card>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
+  const product = products.find(p => p.id === params.id) || products[0]
+  return <ProductDetails product={product} />
 } 

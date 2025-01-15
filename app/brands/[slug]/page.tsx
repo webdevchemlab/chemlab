@@ -1,157 +1,121 @@
 import { Metadata } from "next"
-import BrandDetails from "@/components/brands/brand-details"
+import { BrandDetails } from "@/components/brands/brand-details"
 
 // Mock data - replace with actual data from your backend
 const brands = [
   {
-    id: "merck",
+    id: "1",
+    slug: "sigma-aldrich",
+    name: "Sigma Aldrich",
+    description: "Global leader in chemical manufacturing and distribution",
+    logo: "/brands/sigma-aldrich.svg",
+    productCount: 150,
+    founded: "1975",
+    headquarters: "St. Louis, Missouri, USA",
+    website: "https://www.sigmaaldrich.com",
+    categories: ["Analytical Standards", "Solvents", "Reagents"]
+  },
+  {
+    id: "2",
+    slug: "merck",
     name: "Merck",
-    description: "Global leader in life science, offering high-quality chemicals and laboratory products.",
+    description: "Leading science and technology company in healthcare, life science and electronics",
     logo: "/brands/merck.svg",
-    productCount: 1200,
+    productCount: 120,
     founded: "1668",
     headquarters: "Darmstadt, Germany",
     website: "https://www.merckgroup.com",
-    categories: ["Chemicals", "Life Science", "Laboratory", "Research"],
-    featuredProducts: [
-      {
-        id: "1",
-        name: "Sodium Chloride",
-        casNumber: "7647-14-5",
-        purity: "99.5%",
-        grade: "ACS",
-      },
-    ],
+    categories: ["Pharmaceuticals", "Lab Chemicals", "Chromatography"]
   },
   {
-    id: "sigma-aldrich",
-    name: "Sigma Aldrich",
-    description: "Premier supplier of research chemicals, biochemicals, and lab equipment.",
-    logo: "/brands/sigma-aldrich.svg",
-    productCount: 1500,
-    founded: "1935",
-    headquarters: "St. Louis, Missouri, USA",
-    website: "https://www.sigmaaldrich.com",
-    categories: ["Chemicals", "Biochemicals", "Laboratory", "Research"],
-    featuredProducts: [
-      {
-        id: "1",
-        name: "Ethanol",
-        casNumber: "64-17-5",
-        purity: "99.9%",
-        grade: "ACS",
-      },
-    ],
-  },
-  {
-    id: "srl",
+    id: "3",
+    slug: "srl",
     name: "SRL",
-    description: "Leading manufacturer of laboratory chemicals and analytical reagents.",
+    description: "Premier manufacturer of laboratory chemicals and reagents",
     logo: "/brands/srl.svg",
-    productCount: 800,
+    productCount: 80,
     founded: "1955",
     headquarters: "Mumbai, India",
     website: "https://www.srlchem.com",
-    categories: ["Chemicals", "Reagents", "Laboratory"],
-    featuredProducts: [
-      {
-        id: "1",
-        name: "Sulfuric Acid",
-        casNumber: "7664-93-9",
-        purity: "98%",
-        grade: "AR",
-      },
-    ],
+    categories: ["Lab Chemicals", "Biochemicals", "Standards"]
   },
   {
-    id: "honeywell",
+    id: "4",
+    slug: "honeywell",
     name: "Honeywell",
-    description: "Trusted provider of research chemicals and high-purity solvents.",
+    description: "Global provider of high-purity research chemicals",
     logo: "/brands/honeywell.svg",
-    productCount: 600,
+    productCount: 90,
     founded: "1906",
     headquarters: "Charlotte, North Carolina, USA",
-    website: "https://www.honeywell.com",
-    categories: ["Chemicals", "Solvents", "Research"],
-    featuredProducts: [
-      {
-        id: "1",
-        name: "Acetone",
-        casNumber: "67-64-1",
-        purity: "99.9%",
-        grade: "HPLC",
-      },
-    ],
+    website: "https://lab.honeywell.com",
+    categories: ["Research Chemicals", "Solvents", "Standards"]
   },
   {
-    id: "thermo-fisher",
+    id: "5",
+    slug: "thermo-fisher",
     name: "Thermo Fisher",
-    description: "Global provider of analytical instruments and laboratory supplies.",
+    description: "World leader in serving science with innovative solutions",
     logo: "/brands/thermo-fisher.svg",
-    productCount: 1000,
+    productCount: 200,
     founded: "1956",
     headquarters: "Waltham, Massachusetts, USA",
     website: "https://www.thermofisher.com",
-    categories: ["Equipment", "Instruments", "Laboratory", "Research"],
-    featuredProducts: [
-      {
-        id: "1",
-        name: "pH Meter",
-        casNumber: "N/A",
-        purity: "N/A",
-        grade: "Research",
-      },
-    ],
+    categories: ["Lab Equipment", "Chemicals", "Life Sciences"]
   },
   {
-    id: "borosil",
+    id: "6",
+    slug: "borosil",
     name: "Borosil",
-    description: "Leading manufacturer of laboratory glassware and equipment.",
+    description: "Leading manufacturer of laboratory glassware and equipment",
     logo: "/brands/borosil.svg",
-    productCount: 400,
+    productCount: 60,
     founded: "1962",
     headquarters: "Mumbai, India",
     website: "https://www.borosil.com",
-    categories: ["Glassware", "Equipment", "Laboratory"],
-    featuredProducts: [
-      {
-        id: "1",
-        name: "Volumetric Flask",
-        casNumber: "N/A",
-        purity: "N/A",
-        grade: "A",
-      },
-    ],
-  },
+    categories: ["Glassware", "Lab Equipment", "Instruments"]
+  }
 ]
 
 export async function generateStaticParams() {
-  return brands.map((brand) => ({
-    slug: brand.id,
+  const params = brands.map((brand) => ({
+    slug: brand.slug,
   }))
+
+  // Add SVG file paths
+  const svgParams = brands.map((brand) => ({
+    slug: `${brand.slug}.svg`,
+  }))
+
+  return [...params, ...svgParams]
 }
 
 export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
-  const brand = brands.find((b) => b.id === params.slug)
-  
+  const brand = brands.find(b => b.slug === params.slug || `${b.slug}.svg` === params.slug)
+
   if (!brand) {
     return {
       title: "Brand Not Found - ChemLab Synthesis",
-      description: "The requested brand could not be found.",
+      description: "The requested brand could not be found on ChemLab Synthesis."
     }
   }
 
   return {
     title: `${brand.name} - ChemLab Synthesis`,
-    description: brand.description,
+    description: brand.description
   }
 }
 
 export default async function BrandPage({ params }: { params: { slug: string } }) {
-  const brand = brands.find((b) => b.id === params.slug)
+  const brand = brands.find(b => b.slug === params.slug)
 
   if (!brand) {
-    return <div>Brand not found</div>
+    return (
+      <div className="container mx-auto px-4 py-8">
+        <h1 className="text-2xl font-bold mb-4">Brand Not Found</h1>
+        <p>The requested brand could not be found on ChemLab Synthesis.</p>
+      </div>
+    )
   }
 
   return <BrandDetails brand={brand} />

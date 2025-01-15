@@ -4,53 +4,56 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { BeakerIcon, ShoppingCartIcon, UserCircleIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Container } from "@/components/ui/container";
 
 export default function Header() {
   const pathname = usePathname();
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <Container>
-        <div className="flex h-16 items-center justify-between">
-          <Link href="/" className="flex items-center space-x-2">
+      <div className="container flex h-14 items-center">
+        <div className="mr-4 flex">
+          <Link href="/" className="mr-6 flex items-center space-x-2">
             <BeakerIcon className="h-6 w-6 text-blue-500" />
-            <span className="font-bold">ChemLab Synthesis</span>
+            <span className="hidden font-bold sm:inline-block">
+              ChemLab Synthesis
+            </span>
           </Link>
-
-          <nav className="hidden gap-6 md:flex">
+          <nav className="flex items-center space-x-6 text-sm font-medium">
             <Link
               href="/products"
-              className={`text-sm font-medium transition-colors hover:text-foreground/80 ${pathname === "/products" ? "text-foreground" : "text-foreground/60"}`}
+              className={pathname === "/products" ? "text-foreground" : "text-foreground/60 transition-colors hover:text-foreground"}
             >
               Products
             </Link>
             <Link
-              href="/categories"
-              className={`text-sm font-medium transition-colors hover:text-foreground/80 ${pathname === "/categories" ? "text-foreground" : "text-foreground/60"}`}
-            >
-              Categories
-            </Link>
-            <Link
               href="/brands"
-              className={`text-sm font-medium transition-colors hover:text-foreground/80 ${pathname === "/brands" ? "text-foreground" : "text-foreground/60"}`}
+              className={pathname === "/brands" ? "text-foreground" : "text-foreground/60 transition-colors hover:text-foreground"}
             >
               Brands
             </Link>
+            <Link
+              href="/about"
+              className={pathname === "/about" ? "text-foreground" : "text-foreground/60 transition-colors hover:text-foreground"}
+            >
+              About
+            </Link>
+            <Link
+              href="/contact"
+              className={pathname === "/contact" ? "text-foreground" : "text-foreground/60 transition-colors hover:text-foreground"}
+            >
+              Contact
+            </Link>
           </nav>
-
-          <div className="flex items-center gap-4">
-            <Button variant="ghost" size="icon">
-              <ShoppingCartIcon className="h-5 w-5" />
-              <span className="sr-only">Shopping cart</span>
-            </Button>
-            <Button variant="ghost" size="icon">
-              <UserCircleIcon className="h-5 w-5" />
-              <span className="sr-only">User account</span>
-            </Button>
-          </div>
         </div>
-      </Container>
+        <div className="flex flex-1 items-center justify-end space-x-2">
+          <Button variant="ghost" size="icon">
+            <ShoppingCartIcon className="h-5 w-5" />
+          </Button>
+          <Button variant="ghost" size="icon">
+            <UserCircleIcon className="h-5 w-5" />
+          </Button>
+        </div>
+      </div>
     </header>
   );
 }

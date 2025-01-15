@@ -1,6 +1,8 @@
 "use client"
 
 import { useState } from "react"
+import type { NextPage } from "next"
+import Link from "next/link"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import {
@@ -17,142 +19,155 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
-import { BeakerIcon, FilterIcon, SearchIcon } from "lucide-react"
+import { BeakerIcon } from "lucide-react"
 
 // Mock data - replace with actual data from your backend
 const products = [
   {
-    id: 1,
+    id: "1",
     name: "Sodium Chloride",
     casNumber: "7647-14-5",
-    manufacturer: "Merck",
+    manufacturer: "Sigma Aldrich",
     purity: "99.5%",
     grade: "ACS",
     category: "Inorganic Chemicals",
-    packagingSizes: ["500g", "1kg", "5kg"],
+    price: "$45.00",
+    packSize: "500g"
   },
-  // Add more mock products here
+  {
+    id: "2",
+    name: "Ethanol",
+    casNumber: "64-17-5",
+    manufacturer: "Merck",
+    purity: "99.9%",
+    grade: "HPLC",
+    category: "Solvents",
+    price: "$52.00",
+    packSize: "1L"
+  },
+  {
+    id: "3",
+    name: "Sulfuric Acid",
+    casNumber: "7664-93-9",
+    manufacturer: "SRL",
+    purity: "98%",
+    grade: "AR",
+    category: "Acids",
+    price: "$38.00",
+    packSize: "2.5L"
+  }
 ]
 
-const manufacturers = ["All", "Merck", "Sigma Aldrich", "SRL", "Honeywell", "Thermo Fisher", "Borosil"]
-const categories = ["All", "Organic Chemicals", "Inorganic Chemicals", "Solvents", "Reagents", "Lab Equipment", "Glassware"]
-const grades = ["All", "ACS", "USP", "BP", "EP", "LR", "AR"]
+const ProductsPage: NextPage = () => {
+  const [search, setSearch] = useState("")
+  const [manufacturer, setManufacturer] = useState("all")
+  const [category, setCategory] = useState("all")
+  const [grade, setGrade] = useState("all")
 
-export default function ProductsPage() {
-  const [searchQuery, setSearchQuery] = useState("")
-  const [selectedManufacturer, setSelectedManufacturer] = useState("All")
-  const [selectedCategory, setSelectedCategory] = useState("All")
-  const [selectedGrade, setSelectedGrade] = useState("All")
+  const filteredProducts = products.filter(product => {
+    const matchesSearch = product.name.toLowerCase().includes(search.toLowerCase()) ||
+      product.casNumber.includes(search)
+    const matchesManufacturer = manufacturer === "all" || product.manufacturer === manufacturer
+    const matchesCategory = category === "all" || product.category === category
+    const matchesGrade = grade === "all" || product.grade === grade
+
+    return matchesSearch && matchesManufacturer && matchesCategory && matchesGrade
+  })
 
   return (
-    <div className="min-h-screen bg-background py-12">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold tracking-tight text-foreground">Products</h1>
-          <p className="mt-2 text-muted-foreground">
-            Browse our extensive range of high-quality chemicals and laboratory supplies
-          </p>
-        </div>
-
+    <div className="container mx-auto px-4 py-8">
+      <div className="flex flex-col space-y-8">
         {/* Search and Filters */}
-        <div className="mb-8 space-y-4">
-          <div className="flex flex-col sm:flex-row gap-4">
-            <div className="flex-1">
-              <div className="relative">
-                <SearchIcon className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                <Input
-                  placeholder="Search by name, CAS number, or keyword..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="pl-9"
-                />
-              </div>
+        <div className="flex flex-col md:flex-row gap-4">
+          <div className="flex-1">
+            <div className="relative">
+              <Input
+                placeholder="Search by name or CAS number..."
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                className="pl-4"
+              />
             </div>
-            <Button variant="outline" className="sm:w-auto w-full">
-              <FilterIcon className="h-4 w-4 mr-2" />
-              Filters
-            </Button>
           </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-            <Select value={selectedManufacturer} onValueChange={setSelectedManufacturer}>
-              <SelectTrigger>
+          <div className="flex gap-4">
+            <Select value={manufacturer} onValueChange={setManufacturer}>
+              <SelectTrigger className="w-[180px]">
                 <SelectValue placeholder="Manufacturer" />
               </SelectTrigger>
               <SelectContent>
-                {manufacturers.map((manufacturer) => (
-                  <SelectItem key={manufacturer} value={manufacturer}>
-                    {manufacturer}
-                  </SelectItem>
-                ))}
+                <SelectItem value="all">All Manufacturers</SelectItem>
+                <SelectItem value="Sigma Aldrich">Sigma Aldrich</SelectItem>
+                <SelectItem value="Merck">Merck</SelectItem>
+                <SelectItem value="SRL">SRL</SelectItem>
               </SelectContent>
             </Select>
-
-            <Select value={selectedCategory} onValueChange={setSelectedCategory}>
-              <SelectTrigger>
+            <Select value={category} onValueChange={setCategory}>
+              <SelectTrigger className="w-[180px]">
                 <SelectValue placeholder="Category" />
               </SelectTrigger>
               <SelectContent>
-                {categories.map((category) => (
-                  <SelectItem key={category} value={category}>
-                    {category}
-                  </SelectItem>
-                ))}
+                <SelectItem value="all">All Categories</SelectItem>
+                <SelectItem value="Inorganic Chemicals">Inorganic Chemicals</SelectItem>
+                <SelectItem value="Solvents">Solvents</SelectItem>
+                <SelectItem value="Acids">Acids</SelectItem>
               </SelectContent>
             </Select>
-
-            <Select value={selectedGrade} onValueChange={setSelectedGrade}>
-              <SelectTrigger>
+            <Select value={grade} onValueChange={setGrade}>
+              <SelectTrigger className="w-[180px]">
                 <SelectValue placeholder="Grade" />
               </SelectTrigger>
               <SelectContent>
-                {grades.map((grade) => (
-                  <SelectItem key={grade} value={grade}>
-                    {grade}
-                  </SelectItem>
-                ))}
+                <SelectItem value="all">All Grades</SelectItem>
+                <SelectItem value="ACS">ACS</SelectItem>
+                <SelectItem value="HPLC">HPLC</SelectItem>
+                <SelectItem value="AR">AR</SelectItem>
               </SelectContent>
             </Select>
           </div>
         </div>
 
-        {/* Product Grid */}
+        {/* Products Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {products.map((product) => (
-            <Card key={product.id} className="flex flex-col">
+          {filteredProducts.map((product) => (
+            <Card key={product.id}>
               <CardHeader>
-                <CardTitle className="flex items-center space-x-2">
+                <CardTitle className="flex items-center gap-2">
                   <BeakerIcon className="h-5 w-5 text-blue-500" />
-                  <span>{product.name}</span>
+                  {product.name}
                 </CardTitle>
               </CardHeader>
-              <CardContent className="flex-grow">
-                <div className="space-y-2 text-sm">
+              <CardContent>
+                <div className="space-y-2">
                   <div className="flex justify-between">
                     <span className="text-muted-foreground">CAS Number:</span>
-                    <span className="font-medium">{product.casNumber}</span>
+                    <span>{product.casNumber}</span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-muted-foreground">Manufacturer:</span>
-                    <span className="font-medium">{product.manufacturer}</span>
+                    <span>{product.manufacturer}</span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-muted-foreground">Purity:</span>
-                    <span className="font-medium">{product.purity}</span>
+                    <span>{product.purity}</span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-muted-foreground">Grade:</span>
-                    <span className="font-medium">{product.grade}</span>
+                    <span>{product.grade}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-muted-foreground">Category:</span>
-                    <span className="font-medium">{product.category}</span>
+                    <span className="text-muted-foreground">Pack Size:</span>
+                    <span>{product.packSize}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-muted-foreground">Price:</span>
+                    <span>{product.price}</span>
                   </div>
                 </div>
               </CardContent>
-              <CardFooter className="flex justify-between border-t pt-4">
-                <Button variant="outline" className="w-full">View Details</Button>
+              <CardFooter>
+                <Link href={`/products/${product.id}`} className="w-full">
+                  <Button className="w-full">View Details</Button>
+                </Link>
               </CardFooter>
             </Card>
           ))}
@@ -160,4 +175,6 @@ export default function ProductsPage() {
       </div>
     </div>
   )
-} 
+}
+
+export default ProductsPage 
