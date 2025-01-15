@@ -9,8 +9,12 @@ import Footer from '@/components/layout/footer';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'ChemLab Synthesis - Professional Chemical Distribution',
-  description: 'Your trusted partner for high-quality chemical synthesis, supplies, and laboratory equipment.',
+  title: {
+    default: 'ChemLab Synthesis | High-Quality Chemical Products',
+    template: '%s | ChemLab Synthesis'
+  },
+  description: 'Your trusted source for high-quality chemical products, laboratory supplies, and research materials.',
+  metadataBase: new URL('https://www.chemlabsynthesis.com'),
 };
 
 export default function RootLayout({

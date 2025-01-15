@@ -1,13 +1,24 @@
-"use client"
-
 import { useParams } from "next/navigation"
 import { BeakerIcon } from "lucide-react"
 
-export default function CategoryPage() {
-  const params = useParams()
-  const slug = params.slug as string
+// Mock data - replace with actual data from PayloadCMS
+const categories = [
+  "organic-chemicals",
+  "inorganic-salts",
+  "solvents",
+  "acids-bases",
+  "analytical-standards",
+  "laboratory-glassware",
+]
 
-  const categoryName = slug
+export async function generateStaticParams() {
+  return categories.map((slug) => ({
+    slug,
+  }))
+}
+
+export default function CategoryPage({ params }: { params: { slug: string } }) {
+  const categoryName = params.slug
     .split("-")
     .map(word => word.charAt(0).toUpperCase() + word.slice(1))
     .join(" ")

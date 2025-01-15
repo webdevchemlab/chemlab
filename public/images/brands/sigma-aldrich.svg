@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="200" height="60" viewBox="0 0 200 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="200" height="60" fill="white"/>
+  <path d="M20 15 H40 A20 20 0 0 1 40 45 H20" stroke="#1E40AF" stroke-width="3" fill="none"/>
+  <text x="50" y="35" font-family="Arial" font-weight="bold" font-size="18" fill="#1E40AF">SIGMA-ALDRICH</text>
+  <path d="M20 25 H35" stroke="#1E40AF" stroke-width="2"/>
+  <path d="M20 35 H35" stroke="#1E40AF" stroke-width="2"/>
+</svg> 

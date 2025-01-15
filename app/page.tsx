@@ -1,116 +1,292 @@
-import Link from "next/link";
-import Image from "next/image";
-import { Button } from "@/components/ui/button";
-import { BeakerIcon, ShieldCheckIcon, TruckIcon } from "lucide-react";
-import { FeaturedBrands } from "@/components/sections/featured-brands";
-import { ProductCategories } from "@/components/sections/product-categories";
+import type { Metadata } from "next"
+import Link from "next/link"
+import Image from "next/image"
+import { ArrowRight, BeakerIcon, TestTubes, ShieldCheck, Truck, Users, Scale, FlaskConical, Pipette, Microscope, Quote } from "lucide-react"
+import { Button } from "@/components/ui/button"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+
+export const metadata: Metadata = {
+  title: {
+    default: "ChemLab Synthesis - Premium Laboratory Chemicals & Supplies",
+    template: "%s | ChemLab Synthesis"
+  },
+  description: "Your trusted source for high-quality laboratory chemicals, research reagents, and analytical standards. Authorized dealer for leading manufacturers.",
+  keywords: "laboratory chemicals, research reagents, analytical standards, chemical supplier, lab supplies",
+  openGraph: {
+    title: "ChemLab Synthesis - Premium Laboratory Chemicals & Supplies",
+    description: "Your trusted source for high-quality laboratory chemicals, research reagents, and analytical standards.",
+    type: "website",
+    locale: "en_US",
+    siteName: "ChemLab Synthesis",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "ChemLab Synthesis - Premium Laboratory Chemicals & Supplies",
+    description: "Your trusted source for high-quality laboratory chemicals, research reagents, and analytical standards.",
+  },
+}
+
+const categories = [
+  {
+    title: "Organic Chemicals",
+    description: "High-purity organic compounds, solvents, and reagents for synthesis and analysis",
+    icon: BeakerIcon,
+  },
+  {
+    title: "Inorganic Chemicals",
+    description: "Premium quality inorganic reagents, salts, and compounds",
+    icon: TestTubes,
+  },
+  {
+    title: "Analytical Standards",
+    description: "Certified reference materials and analytical standards for calibration",
+    icon: Scale,
+  },
+  {
+    title: "Laboratory Essentials",
+    description: "Essential lab chemicals, buffers, and solutions for daily use",
+    icon: FlaskConical,
+  },
+  {
+    title: "Chromatography",
+    description: "HPLC grade solvents and mobile phase solutions",
+    icon: Pipette,
+  },
+  {
+    title: "Biochemicals",
+    description: "Enzymes, proteins, and biochemical reagents for life science research",
+    icon: Microscope,
+  }
+]
+
+const features = [
+  {
+    title: "Quality Assured",
+    description: "All products sourced directly from authorized manufacturers",
+    icon: ShieldCheck,
+  },
+  {
+    title: "Fast Delivery",
+    description: "Efficient logistics network for timely delivery",
+    icon: Truck,
+  },
+  {
+    title: "Expert Support",
+    description: "Technical assistance from qualified professionals",
+    icon: Users,
+  },
+]
+
+const brands = [
+  {
+    name: "Sigma-Aldrich",
+    logo: "/images/brands/sigma-aldrich.svg",
+  },
+  {
+    name: "Merck",
+    logo: "/images/brands/merck.svg",
+  },
+  {
+    name: "SRL",
+    logo: "/images/brands/srl.svg",
+  },
+  {
+    name: "Honeywell",
+    logo: "/images/brands/honeywell.svg",
+  },
+  {
+    name: "Thermo Fisher",
+    logo: "/images/brands/thermo-fisher.svg",
+  },
+  {
+    name: "Borosil",
+    logo: "/images/brands/borosil.svg",
+  }
+]
+
+const testimonials = [
+  {
+    quote: "ChemLab Synthesis has been our go-to supplier for research chemicals. Their quality and service are unmatched.",
+    author: "Dr. Sarah Chen",
+    role: "Research Director",
+    institution: "Advanced Materials Institute"
+  },
+  {
+    quote: "Exceptional product quality and technical support. Their team's expertise has been invaluable to our research.",
+    author: "Prof. Michael Rodriguez",
+    role: "Principal Investigator",
+    institution: "University Research Lab"
+  },
+  {
+    quote: "Fast delivery and excellent documentation. They've streamlined our procurement process significantly.",
+    author: "Dr. James Wilson",
+    role: "Lab Manager",
+    institution: "Pharmaceutical Research"
+  }
+]
 
 export default function Home() {
   return (
-    <div className="flex flex-col min-h-screen bg-background">
+    <main className="flex-1">
       {/* Hero Section */}
-      <section className="relative overflow-hidden bg-background py-20">
-        <div className="absolute inset-0 bg-grid-slate-400/[0.05] bg-[size:40px_40px] [mask-image:linear-gradient(0deg,white,rgba(255,255,255,0.6))] dark:bg-grid-slate-600/[0.05]"></div>
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative">
-          <div className="grid gap-8 lg:grid-cols-2 lg:gap-12 items-center">
-            <div className="flex flex-col justify-center space-y-8 max-w-2xl mx-auto lg:mx-0">
-              <div className="space-y-6 text-center lg:text-left">
-                <h1 className="text-4xl font-bold tracking-tighter text-foreground sm:text-5xl xl:text-6xl/none">
-                  Advanced Chemical Synthesis Solutions
-                  <span className="text-blue-500">.</span>
-                </h1>
-                <p className="text-muted-foreground md:text-xl">
-                  Your trusted partner for high-quality chemical synthesis, supplies, and laboratory equipment.
-                  Serving industries with reliability and expertise.
-                </p>
-              </div>
-              <div className="flex flex-col gap-3 min-[400px]:flex-row justify-center lg:justify-start">
-                <Button asChild size="lg" className="bg-blue-500 hover:bg-blue-600 text-white">
+      <section className="relative py-20 bg-gradient-to-r from-blue-600 to-blue-800 text-white overflow-hidden">
+        <div className="absolute inset-0 bg-grid-white/[0.2] bg-[size:16px_16px]" />
+        <div className="container mx-auto px-4">
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            <div className="relative z-10">
+              <h1 className="text-5xl font-bold mb-6">
+                Your Trusted Partner for Premium Laboratory Chemicals
+              </h1>
+              <p className="text-xl mb-8 text-blue-100">
+                Authorized dealer for leading manufacturers. Serving research and educational institutions with high-quality chemicals and laboratory supplies.
+              </p>
+              <div className="flex flex-wrap gap-4">
+                <Button asChild size="lg" variant="secondary">
                   <Link href="/products">Browse Products</Link>
                 </Button>
-                <Button asChild size="lg" variant="outline" className="border-blue-200 dark:border-blue-800">
-                  <Link href="/contact">Contact Sales</Link>
+                <Button asChild size="lg" variant="outline" className="bg-transparent hover:bg-blue-700">
+                  <Link href="/contact">Request Quote</Link>
                 </Button>
-              </div>
-              <div className="flex items-center space-x-4 text-sm text-muted-foreground justify-center lg:justify-start">
-                <div className="flex items-center space-x-1.5">
-                  <ShieldCheckIcon className="h-5 w-5 text-green-500" />
-                  <span>Safety Certified</span>
-                </div>
-                <div className="h-1.5 w-1.5 rounded-full bg-muted"></div>
-                <div className="flex items-center space-x-1.5">
-                  <TruckIcon className="h-5 w-5 text-blue-500" />
-                  <span>Fast Delivery</span>
-                </div>
               </div>
             </div>
             <div className="relative hidden lg:block">
-              <div className="absolute inset-0 bg-gradient-to-br from-blue-500/20 to-purple-500/20 blur-3xl"></div>
-              <div className="relative aspect-square overflow-hidden rounded-xl border bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-950/50 dark:to-indigo-950/50">
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <BeakerIcon className="h-32 w-32 text-blue-500/20" />
+              <div className="relative w-full aspect-square">
+                <Image
+                  src="/images/hero-illustration.svg"
+                  alt="Laboratory Equipment Illustration"
+                  fill
+                  className="object-contain"
+                  priority
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="absolute inset-0 bg-gradient-to-t from-blue-900/20 to-transparent" />
+      </section>
+
+      {/* Featured Brands */}
+      <section className="py-16 bg-gray-50">
+        <div className="container mx-auto px-4">
+          <h2 className="text-3xl font-bold text-center mb-4">Trusted by Leading Manufacturers</h2>
+          <p className="text-lg text-gray-600 text-center mb-12 max-w-3xl mx-auto">
+            We are authorized dealers for premium chemical and laboratory equipment manufacturers
+          </p>
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8">
+            {brands.map((brand) => (
+              <div 
+                key={brand.name} 
+                className="flex items-center justify-center p-6 bg-white rounded-lg shadow-sm hover:shadow-md transition-all grayscale hover:grayscale-0"
+              >
+                <div className="relative w-full aspect-[3/2]">
+                  <Image
+                    src={brand.logo}
+                    alt={`${brand.name} logo`}
+                    fill
+                    className="object-contain"
+                  />
                 </div>
               </div>
-            </div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* Featured Brands Section */}
-      <FeaturedBrands />
-
-      {/* Product Categories Section */}
-      <ProductCategories />
-
-      {/* Features Section */}
-      <section className="py-20 bg-muted/50">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3 max-w-7xl mx-auto">
-            <div className="flex flex-col items-center text-center p-6 rounded-lg bg-background shadow-sm">
-              <div className="mb-4 rounded-full bg-blue-100 p-4 dark:bg-blue-900/50">
-                <BeakerIcon className="h-8 w-8 text-blue-600 dark:text-blue-400" />
-              </div>
-              <h3 className="mb-2 text-xl font-semibold text-foreground">Premium Synthesis</h3>
-              <p className="text-muted-foreground">
-                High-quality chemicals and synthesis solutions from trusted manufacturers.
-              </p>
-            </div>
-            <div className="flex flex-col items-center text-center p-6 rounded-lg bg-background shadow-sm">
-              <div className="mb-4 rounded-full bg-green-100 p-4 dark:bg-green-900/50">
-                <ShieldCheckIcon className="h-8 w-8 text-green-600 dark:text-green-400" />
-              </div>
-              <h3 className="mb-2 text-xl font-semibold text-foreground">Safety First</h3>
-              <p className="text-muted-foreground">
-                Comprehensive safety documentation and handling guidelines for all products.
-              </p>
-            </div>
-            <div className="flex flex-col items-center text-center p-6 rounded-lg bg-background shadow-sm">
-              <div className="mb-4 rounded-full bg-orange-100 p-4 dark:bg-orange-900/50">
-                <TruckIcon className="h-8 w-8 text-orange-600 dark:text-orange-400" />
-              </div>
-              <h3 className="mb-2 text-xl font-semibold text-foreground">Reliable Delivery</h3>
-              <p className="text-muted-foreground">
-                Secure and timely delivery with proper handling and transportation.
-              </p>
-            </div>
+      {/* Product Categories */}
+      <section className="py-16">
+        <div className="container mx-auto px-4">
+          <h2 className="text-3xl font-bold text-center mb-4">Product Categories</h2>
+          <p className="text-lg text-gray-600 text-center mb-12 max-w-3xl mx-auto">
+            Explore our comprehensive range of high-quality laboratory chemicals and reagents
+          </p>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {categories.map((category) => (
+              <Card key={category.title} className="hover:shadow-lg transition-shadow">
+                <CardHeader>
+                  <div className="mb-4 w-12 h-12 rounded-lg bg-blue-100 text-blue-700 flex items-center justify-center">
+                    <category.icon className="w-6 h-6" />
+                  </div>
+                  <CardTitle className="text-xl mb-2">{category.title}</CardTitle>
+                  <CardDescription className="text-gray-600">{category.description}</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <Button asChild variant="ghost" className="group">
+                    <Link href={`/products?category=${category.title}`}>
+                      View Products
+                      <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
+                    </Link>
+                  </Button>
+                </CardContent>
+              </Card>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="py-20 bg-gradient-to-b from-background to-muted">
-        <div className="container">
-          <div className="mx-auto max-w-2xl text-center">
-            <h2 className="mb-4 text-3xl font-bold text-foreground sm:text-4xl">Ready to Get Started?</h2>
-            <p className="mb-8 text-muted-foreground">
-              Create an account to access our full catalog and start ordering.
-            </p>
-            <Button asChild size="lg" className="bg-blue-500 hover:bg-blue-600 text-white">
-              <Link href="/register">Create Business Account</Link>
-            </Button>
+      {/* Why Choose Us */}
+      <section className="py-16 bg-gray-50">
+        <div className="container mx-auto px-4">
+          <h2 className="text-3xl font-bold text-center mb-12">Why Choose ChemLab Synthesis?</h2>
+          <div className="grid md:grid-cols-3 gap-8">
+            {features.map((feature) => (
+              <Card key={feature.title} className="bg-white">
+                <CardHeader>
+                  <div className="mb-4 w-12 h-12 rounded-lg bg-blue-100 text-blue-700 flex items-center justify-center">
+                    <feature.icon className="w-6 h-6" />
+                  </div>
+                  <CardTitle>{feature.title}</CardTitle>
+                  <CardDescription>{feature.description}</CardDescription>
+                </CardHeader>
+              </Card>
+            ))}
           </div>
         </div>
       </section>
-    </div>
-  );
+
+      {/* Testimonials */}
+      <section className="py-16 bg-white">
+        <div className="container mx-auto px-4">
+          <h2 className="text-3xl font-bold text-center mb-4">What Our Clients Say</h2>
+          <p className="text-lg text-gray-600 text-center mb-12 max-w-3xl mx-auto">
+            Trusted by leading research institutions and laboratories worldwide
+          </p>
+          <div className="grid md:grid-cols-3 gap-8">
+            {testimonials.map((testimonial) => (
+              <Card key={testimonial.author} className="bg-gray-50">
+                <CardHeader>
+                  <div className="mb-4 text-blue-700">
+                    <Quote className="w-8 h-8" />
+                  </div>
+                  <CardDescription className="text-gray-700 text-lg font-medium mb-6">
+                    "{testimonial.quote}"
+                  </CardDescription>
+                  <div>
+                    <CardTitle className="text-base mb-1">{testimonial.author}</CardTitle>
+                    <CardDescription>
+                      {testimonial.role}
+                      <br />
+                      {testimonial.institution}
+                    </CardDescription>
+                  </div>
+                </CardHeader>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Call to Action */}
+      <section className="py-16 bg-blue-700 text-white">
+        <div className="container mx-auto px-4 text-center">
+          <h2 className="text-3xl font-bold mb-6">Ready to Get Started?</h2>
+          <p className="text-xl mb-8 max-w-2xl mx-auto">
+            Contact us today to discuss your requirements or request a quote for your chemical needs.
+          </p>
+          <Button asChild size="lg" variant="secondary">
+            <Link href="/contact">Contact Us</Link>
+          </Button>
+        </div>
+      </section>
+    </main>
+  )
 }

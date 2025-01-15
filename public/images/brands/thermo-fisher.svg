@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="200" height="60" viewBox="0 0 200 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="200" height="60" fill="white"/>
+  <path d="M20 15V45M20 20H35M20 30H30" stroke="#0369A1" stroke-width="3"/>
+  <text x="45" y="35" font-family="Arial" font-weight="bold" font-size="16" fill="#0369A1">THERMO FISHER</text>
+  <path d="M160 15V30H180M160 45V30" stroke="#0369A1" stroke-width="3" fill="none"/>
+</svg> 

@@ -1,484 +1,336 @@
 "use client"
 
 import { useState } from "react"
-import Image from "next/image"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-  CardFooter,
-} from "@/components/ui/card"
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-  DialogFooter,
-} from "@/components/ui/dialog"
-import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form"
-import {
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-} from "@/components/ui/tabs"
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Textarea } from "@/components/ui/textarea"
 import { BeakerIcon, FileText, ShieldAlert, FileSpreadsheet, Download } from "lucide-react"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import * as z from "zod"
+import { useToast } from "@/components/ui/use-toast"
+import type { Product } from "@/app/products/[id]/page"
 
-// Form validation schemas
 const quoteFormSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
   email: z.string().email("Please enter a valid email"),
   company: z.string().min(2, "Company name must be at least 2 characters"),
-  quantity: z.string().min(1, "Please enter the required quantity"),
-  message: z.string().optional(),
+  quantity: z.string().min(1, "Please specify the quantity"),
+  message: z.string().optional()
 })
 
 const supportFormSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
   email: z.string().email("Please enter a valid email"),
   subject: z.string().min(5, "Subject must be at least 5 characters"),
-  message: z.string().min(10, "Message must be at least 10 characters"),
+  message: z.string().min(10, "Message must be at least 10 characters")
 })
 
-interface ProductDetailsProps {
-  product: {
-    id: string
-    name: string
-    casNumber: string
-    manufacturer: string
-    purity: string
-    grade: string
-    category: string
-    price: string
-    packSize: string
-    molecularFormula: string
-    molecularWeight: string
-    description: string
-    specifications: Record<string, string>
-    safetyInfo: {
-      hazardStatements: string[]
-      precautionaryStatements: string[]
-      storage: string
-      disposal: string
-    }
-    packagingOptions: Array<{
-      size: string
-      price: string
-    }>
-    documents: {
-      sds: string
-      coa: string
-      specification: string
-    }
-  }
-}
+type QuoteFormValues = z.infer<typeof quoteFormSchema>
+type SupportFormValues = z.infer<typeof supportFormSchema>
 
-interface FormFieldProps {
-  field: {
-    value: string;
-    onChange: (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
-    onBlur: () => void;
-    name: string;
-    ref: React.Ref<HTMLInputElement | HTMLTextAreaElement>;
-  };
+interface ProductDetailsProps {
+  product: Product
 }
 
 export function ProductDetails({ product }: ProductDetailsProps) {
-  const [selectedPackSize, setSelectedPackSize] = useState(product.packagingOptions[0])
-  const [isQuoteDialogOpen, setIsQuoteDialogOpen] = useState(false)
-  const [isSupportDialogOpen, setIsSupportDialogOpen] = useState(false)
+  const [quoteOpen, setQuoteOpen] = useState(false)
+  const [supportOpen, setSupportOpen] = useState(false)
+  const { toast } = useToast()
 
-  const quoteForm = useForm<z.infer<typeof quoteFormSchema>>({
-    resolver: zodResolver(quoteFormSchema),
-    defaultValues: {
-      name: "",
-      email: "",
-      company: "",
-      quantity: "",
-      message: "",
-    },
+  const quoteForm = useForm<QuoteFormValues>({
+    resolver: zodResolver(quoteFormSchema)
   })
 
-  const supportForm = useForm<z.infer<typeof supportFormSchema>>({
-    resolver: zodResolver(supportFormSchema),
-    defaultValues: {
-      name: "",
-      email: "",
-      subject: "",
-      message: "",
-    },
+  const supportForm = useForm<SupportFormValues>({
+    resolver: zodResolver(supportFormSchema)
   })
 
-  const onQuoteSubmit = (data: z.infer<typeof quoteFormSchema>) => {
-    console.log("Quote Request:", data)
-    setIsQuoteDialogOpen(false)
-    quoteForm.reset()
+  async function onQuoteSubmit(data: QuoteFormValues) {
+    try {
+      const response = await fetch("/api/quotes", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ...data, productId: product.id })
+      })
+
+      if (!response.ok) throw new Error("Failed to submit quote request")
+
+      toast({
+        title: "Quote Request Submitted",
+        description: "We'll get back to you shortly with pricing details."
+      })
+      setQuoteOpen(false)
+      quoteForm.reset()
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Failed to submit quote request. Please try again.",
+        variant: "destructive"
+      })
+    }
   }
 
-  const onSupportSubmit = (data: z.infer<typeof supportFormSchema>) => {
-    console.log("Support Request:", data)
-    setIsSupportDialogOpen(false)
-    supportForm.reset()
+  async function onSupportSubmit(data: SupportFormValues) {
+    try {
+      const response = await fetch("/api/support", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ...data, productId: product.id })
+      })
+
+      if (!response.ok) throw new Error("Failed to submit support request")
+
+      toast({
+        title: "Support Request Submitted",
+        description: "Our technical team will contact you soon."
+      })
+      setSupportOpen(false)
+      supportForm.reset()
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Failed to submit support request. Please try again.",
+        variant: "destructive"
+      })
+    }
+  }
+
+  async function handleDocumentDownload(doc: { name: string; url: string; type: string }) {
+    try {
+      const response = await fetch(doc.url)
+      if (!response.ok) throw new Error("Failed to download document")
+
+      const blob = await response.blob()
+      const url = window.URL.createObjectURL(blob)
+      const a = document.createElement("a")
+      a.href = url
+      a.download = doc.name
+      document.body.appendChild(a)
+      a.click()
+      window.URL.revokeObjectURL(url)
+      document.body.removeChild(a)
+
+      toast({
+        title: "Download Started",
+        description: `${doc.name} is being downloaded.`
+      })
+    } catch (error) {
+      toast({
+        title: "Download Failed",
+        description: "Failed to download document. Please try again.",
+        variant: "destructive"
+      })
+    }
   }
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="container mx-auto py-8">
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        {/* Product Overview */}
         <div className="lg:col-span-2">
           <Card>
             <CardHeader>
-              <div className="flex items-center gap-2">
-                <BeakerIcon className="h-6 w-6 text-blue-500" />
-                <div>
-                  <CardTitle>{product.name}</CardTitle>
-                  <CardDescription>CAS: {product.casNumber}</CardDescription>
-                </div>
-              </div>
+              <CardTitle>{product.name}</CardTitle>
+              <CardDescription>
+                CAS Number: {product.casNumber} | Grade: {product.grade} | Purity: {product.purity}
+              </CardDescription>
             </CardHeader>
             <CardContent>
-              <p className="text-muted-foreground mb-4">{product.description}</p>
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <h4 className="font-medium mb-2">Chemical Properties</h4>
-                  <div className="space-y-2">
-                    <div className="flex justify-between">
-                      <span className="text-muted-foreground">Molecular Formula:</span>
-                      <span>{product.molecularFormula}</span>
+              <Tabs defaultValue="specifications">
+                <TabsList>
+                  <TabsTrigger value="specifications">
+                    <BeakerIcon className="w-4 h-4 mr-2" />
+                    Specifications
+                  </TabsTrigger>
+                  <TabsTrigger value="safety">
+                    <ShieldAlert className="w-4 h-4 mr-2" />
+                    Safety
+                  </TabsTrigger>
+                  <TabsTrigger value="documents">
+                    <FileText className="w-4 h-4 mr-2" />
+                    Documents
+                  </TabsTrigger>
+                </TabsList>
+                <TabsContent value="specifications">
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <h4 className="font-medium">Appearance</h4>
+                      <p>{product.specifications.appearance}</p>
                     </div>
-                    <div className="flex justify-between">
-                      <span className="text-muted-foreground">Molecular Weight:</span>
-                      <span>{product.molecularWeight}</span>
+                    <div>
+                      <h4 className="font-medium">Solubility</h4>
+                      <p>{product.specifications.solubility}</p>
+                    </div>
+                    <div>
+                      <h4 className="font-medium">pH</h4>
+                      <p>{product.specifications.ph}</p>
+                    </div>
+                    <div>
+                      <h4 className="font-medium">Density</h4>
+                      <p>{product.specifications.density}</p>
+                    </div>
+                    <div>
+                      <h4 className="font-medium">Melting Point</h4>
+                      <p>{product.specifications.meltingPoint}</p>
+                    </div>
+                    <div>
+                      <h4 className="font-medium">Boiling Point</h4>
+                      <p>{product.specifications.boilingPoint}</p>
                     </div>
                   </div>
-                </div>
-                <div>
-                  <h4 className="font-medium mb-2">Product Details</h4>
-                  <div className="space-y-2">
-                    <div className="flex justify-between">
-                      <span className="text-muted-foreground">Grade:</span>
-                      <span>{product.grade}</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-muted-foreground">Purity:</span>
-                      <span>{product.purity}</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Tabs Section */}
-          <Tabs defaultValue="specifications" className="mt-8">
-            <TabsList className="grid w-full grid-cols-3">
-              <TabsTrigger value="specifications">
-                <FileText className="h-4 w-4 mr-2" />
-                Specifications
-              </TabsTrigger>
-              <TabsTrigger value="safety">
-                <ShieldAlert className="h-4 w-4 mr-2" />
-                Safety Data
-              </TabsTrigger>
-              <TabsTrigger value="documents">
-                <FileSpreadsheet className="h-4 w-4 mr-2" />
-                Documents
-              </TabsTrigger>
-            </TabsList>
-
-            <TabsContent value="specifications">
-              <Card>
-                <CardHeader>
-                  <CardTitle>Technical Specifications</CardTitle>
-                </CardHeader>
-                <CardContent>
+                </TabsContent>
+                <TabsContent value="safety">
                   <div className="space-y-4">
-                    {Object.entries(product.specifications).map(([key, value]) => (
-                      <div key={key} className="flex justify-between border-b pb-2">
-                        <span className="text-muted-foreground capitalize">{key.replace(/([A-Z])/g, " $1").trim()}:</span>
-                        <span>{value}</span>
-                      </div>
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
-            </TabsContent>
-
-            <TabsContent value="safety">
-              <Card>
-                <CardHeader>
-                  <CardTitle>Safety Information</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-6">
                     <div>
                       <h4 className="font-medium mb-2">Hazard Statements</h4>
-                      <ul className="list-disc list-inside space-y-1">
-                        {product.safetyInfo.hazardStatements.map((statement, index) => (
-                          <li key={index} className="text-muted-foreground">{statement}</li>
+                      <ul className="list-disc pl-5">
+                        {product.safetyInfo.hazards.map((hazard, index) => (
+                          <li key={index}>{hazard}</li>
                         ))}
                       </ul>
                     </div>
                     <div>
                       <h4 className="font-medium mb-2">Precautionary Statements</h4>
-                      <ul className="list-disc list-inside space-y-1">
-                        {product.safetyInfo.precautionaryStatements.map((statement, index) => (
-                          <li key={index} className="text-muted-foreground">{statement}</li>
+                      <ul className="list-disc pl-5">
+                        {product.safetyInfo.precautions.map((precaution, index) => (
+                          <li key={index}>{precaution}</li>
                         ))}
                       </ul>
                     </div>
                     <div>
                       <h4 className="font-medium mb-2">Storage</h4>
-                      <p className="text-muted-foreground">{product.safetyInfo.storage}</p>
-                    </div>
-                    <div>
-                      <h4 className="font-medium mb-2">Disposal</h4>
-                      <p className="text-muted-foreground">{product.safetyInfo.disposal}</p>
+                      <ul className="list-disc pl-5">
+                        {product.safetyInfo.storage.map((item, index) => (
+                          <li key={index}>{item}</li>
+                        ))}
+                      </ul>
                     </div>
                   </div>
-                </CardContent>
-              </Card>
-            </TabsContent>
-
-            <TabsContent value="documents">
-              <Card>
-                <CardHeader>
-                  <CardTitle>Product Documentation</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-4">
-                    <Button variant="outline" className="w-full justify-between">
-                      Safety Data Sheet (SDS)
-                      <Download className="h-4 w-4" />
-                    </Button>
-                    <Button variant="outline" className="w-full justify-between">
-                      Certificate of Analysis (CoA)
-                      <Download className="h-4 w-4" />
-                    </Button>
-                    <Button variant="outline" className="w-full justify-between">
-                      Product Specification Sheet
-                      <Download className="h-4 w-4" />
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
-            </TabsContent>
-          </Tabs>
-        </div>
-
-        {/* Sidebar */}
-        <div className="lg:col-span-1">
-          <Card>
-            <CardHeader>
-              <CardTitle>Request a Quote</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-4">
-                <div>
-                  <h4 className="font-medium mb-2">Select Package Size</h4>
-                  <div className="space-y-2">
-                    {product.packagingOptions.map((option) => (
-                      <div
-                        key={option.size}
-                        className={`p-3 border rounded-lg cursor-pointer transition-colors ${
-                          selectedPackSize.size === option.size
-                            ? "border-blue-500 bg-blue-50"
-                            : "hover:border-gray-400"
-                        }`}
-                        onClick={() => setSelectedPackSize(option)}
+                </TabsContent>
+                <TabsContent value="documents">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {product.documents.map((doc, index) => (
+                      <Button
+                        key={index}
+                        variant="outline"
+                        className="justify-start"
+                        onClick={() => handleDocumentDownload(doc)}
                       >
-                        <div className="flex justify-between items-center">
-                          <span>{option.size}</span>
-                          <span className="font-medium">{option.price}</span>
-                        </div>
-                      </div>
+                        <Download className="w-4 h-4 mr-2" />
+                        {doc.name}
+                        {doc.fileSize && <span className="ml-2 text-sm text-muted-foreground">({doc.fileSize})</span>}
+                      </Button>
                     ))}
                   </div>
-                </div>
+                </TabsContent>
+              </Tabs>
+            </CardContent>
+          </Card>
+        </div>
+        <div>
+          <Card>
+            <CardHeader>
+              <CardTitle>Request Information</CardTitle>
+              <CardDescription>Get a quote or technical support</CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <Dialog open={quoteOpen} onOpenChange={setQuoteOpen}>
+                <DialogTrigger asChild>
+                  <Button className="w-full">Request Quote</Button>
+                </DialogTrigger>
+                <DialogContent>
+                  <DialogHeader>
+                    <DialogTitle>Request a Quote</DialogTitle>
+                    <DialogDescription>
+                      Fill out the form below to receive pricing information for {product.name}
+                    </DialogDescription>
+                  </DialogHeader>
+                  <form onSubmit={quoteForm.handleSubmit(onQuoteSubmit)} className="space-y-4">
+                    <div>
+                      <Label htmlFor="name">Name</Label>
+                      <Input {...quoteForm.register("name")} />
+                      {quoteForm.formState.errors.name && (
+                        <p className="text-sm text-red-500">{quoteForm.formState.errors.name.message}</p>
+                      )}
+                    </div>
+                    <div>
+                      <Label htmlFor="email">Email</Label>
+                      <Input {...quoteForm.register("email")} type="email" />
+                      {quoteForm.formState.errors.email && (
+                        <p className="text-sm text-red-500">{quoteForm.formState.errors.email.message}</p>
+                      )}
+                    </div>
+                    <div>
+                      <Label htmlFor="company">Company</Label>
+                      <Input {...quoteForm.register("company")} />
+                      {quoteForm.formState.errors.company && (
+                        <p className="text-sm text-red-500">{quoteForm.formState.errors.company.message}</p>
+                      )}
+                    </div>
+                    <div>
+                      <Label htmlFor="quantity">Quantity Required</Label>
+                      <Input {...quoteForm.register("quantity")} />
+                      {quoteForm.formState.errors.quantity && (
+                        <p className="text-sm text-red-500">{quoteForm.formState.errors.quantity.message}</p>
+                      )}
+                    </div>
+                    <div>
+                      <Label htmlFor="message">Additional Requirements (Optional)</Label>
+                      <Textarea {...quoteForm.register("message")} />
+                    </div>
+                    <Button type="submit">Submit Quote Request</Button>
+                  </form>
+                </DialogContent>
+              </Dialog>
 
-                {/* Quote Request Dialog */}
-                <Dialog open={isQuoteDialogOpen} onOpenChange={setIsQuoteDialogOpen}>
-                  <DialogTrigger asChild>
-                    <Button className="w-full">Request Quote</Button>
-                  </DialogTrigger>
-                  <DialogContent>
-                    <DialogHeader>
-                      <DialogTitle>Request a Quote</DialogTitle>
-                      <DialogDescription>
-                        Fill out the form below to request a quote for {product.name}
-                      </DialogDescription>
-                    </DialogHeader>
-                    <Form {...quoteForm}>
-                      <form onSubmit={quoteForm.handleSubmit(onQuoteSubmit)} className="space-y-4">
-                        <FormField
-                          control={quoteForm.control}
-                          name="name"
-                          render={({ field }: { field: FormFieldProps['field'] }) => (
-                            <FormItem>
-                              <FormLabel>Name</FormLabel>
-                              <FormControl>
-                                <Input placeholder="Your name" {...field} />
-                              </FormControl>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
-                        <FormField
-                          control={quoteForm.control}
-                          name="email"
-                          render={({ field }: { field: FormFieldProps['field'] }) => (
-                            <FormItem>
-                              <FormLabel>Email</FormLabel>
-                              <FormControl>
-                                <Input placeholder="your.email@company.com" {...field} />
-                              </FormControl>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
-                        <FormField
-                          control={quoteForm.control}
-                          name="company"
-                          render={({ field }: { field: FormFieldProps['field'] }) => (
-                            <FormItem>
-                              <FormLabel>Company</FormLabel>
-                              <FormControl>
-                                <Input placeholder="Your company name" {...field} />
-                              </FormControl>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
-                        <FormField
-                          control={quoteForm.control}
-                          name="quantity"
-                          render={({ field }: { field: FormFieldProps['field'] }) => (
-                            <FormItem>
-                              <FormLabel>Quantity Required</FormLabel>
-                              <FormControl>
-                                <Input placeholder={`Enter quantity (${selectedPackSize.size})`} {...field} />
-                              </FormControl>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
-                        <FormField
-                          control={quoteForm.control}
-                          name="message"
-                          render={({ field }: { field: FormFieldProps['field'] }) => (
-                            <FormItem>
-                              <FormLabel>Additional Requirements (Optional)</FormLabel>
-                              <FormControl>
-                                <Textarea placeholder="Any specific requirements or questions?" {...field} />
-                              </FormControl>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
-                        <DialogFooter>
-                          <Button type="submit">Submit Quote Request</Button>
-                        </DialogFooter>
-                      </form>
-                    </Form>
-                  </DialogContent>
-                </Dialog>
-
-                {/* Technical Support Dialog */}
-                <Dialog open={isSupportDialogOpen} onOpenChange={setIsSupportDialogOpen}>
-                  <DialogTrigger asChild>
-                    <Button variant="outline" className="w-full">Technical Support</Button>
-                  </DialogTrigger>
-                  <DialogContent>
-                    <DialogHeader>
-                      <DialogTitle>Technical Support</DialogTitle>
-                      <DialogDescription>
-                        Need technical assistance? Fill out the form below and our experts will get back to you.
-                      </DialogDescription>
-                    </DialogHeader>
-                    <Form {...supportForm}>
-                      <form onSubmit={supportForm.handleSubmit(onSupportSubmit)} className="space-y-4">
-                        <FormField
-                          control={supportForm.control}
-                          name="name"
-                          render={({ field }: { field: FormFieldProps['field'] }) => (
-                            <FormItem>
-                              <FormLabel>Name</FormLabel>
-                              <FormControl>
-                                <Input placeholder="Your name" {...field} />
-                              </FormControl>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
-                        <FormField
-                          control={supportForm.control}
-                          name="email"
-                          render={({ field }: { field: FormFieldProps['field'] }) => (
-                            <FormItem>
-                              <FormLabel>Email</FormLabel>
-                              <FormControl>
-                                <Input placeholder="your.email@company.com" {...field} />
-                              </FormControl>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
-                        <FormField
-                          control={supportForm.control}
-                          name="subject"
-                          render={({ field }: { field: FormFieldProps['field'] }) => (
-                            <FormItem>
-                              <FormLabel>Subject</FormLabel>
-                              <FormControl>
-                                <Input placeholder="Brief description of your inquiry" {...field} />
-                              </FormControl>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
-                        <FormField
-                          control={supportForm.control}
-                          name="message"
-                          render={({ field }: { field: FormFieldProps['field'] }) => (
-                            <FormItem>
-                              <FormLabel>Message</FormLabel>
-                              <FormControl>
-                                <Textarea 
-                                  placeholder="Describe your technical question or issue in detail" 
-                                  className="min-h-[100px]"
-                                  {...field} 
-                                />
-                              </FormControl>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
-                        <DialogFooter>
-                          <Button type="submit">Submit Support Request</Button>
-                        </DialogFooter>
-                      </form>
-                    </Form>
-                  </DialogContent>
-                </Dialog>
-              </div>
+              <Dialog open={supportOpen} onOpenChange={setSupportOpen}>
+                <DialogTrigger asChild>
+                  <Button variant="outline" className="w-full">Technical Support</Button>
+                </DialogTrigger>
+                <DialogContent>
+                  <DialogHeader>
+                    <DialogTitle>Technical Support</DialogTitle>
+                    <DialogDescription>
+                      Need help with {product.name}? Our technical team is here to assist you.
+                    </DialogDescription>
+                  </DialogHeader>
+                  <form onSubmit={supportForm.handleSubmit(onSupportSubmit)} className="space-y-4">
+                    <div>
+                      <Label htmlFor="name">Name</Label>
+                      <Input {...supportForm.register("name")} />
+                      {supportForm.formState.errors.name && (
+                        <p className="text-sm text-red-500">{supportForm.formState.errors.name.message}</p>
+                      )}
+                    </div>
+                    <div>
+                      <Label htmlFor="email">Email</Label>
+                      <Input {...supportForm.register("email")} type="email" />
+                      {supportForm.formState.errors.email && (
+                        <p className="text-sm text-red-500">{supportForm.formState.errors.email.message}</p>
+                      )}
+                    </div>
+                    <div>
+                      <Label htmlFor="subject">Subject</Label>
+                      <Input {...supportForm.register("subject")} />
+                      {supportForm.formState.errors.subject && (
+                        <p className="text-sm text-red-500">{supportForm.formState.errors.subject.message}</p>
+                      )}
+                    </div>
+                    <div>
+                      <Label htmlFor="message">Message</Label>
+                      <Textarea {...supportForm.register("message")} />
+                      {supportForm.formState.errors.message && (
+                        <p className="text-sm text-red-500">{supportForm.formState.errors.message.message}</p>
+                      )}
+                    </div>
+                    <Button type="submit">Submit Support Request</Button>
+                  </form>
+                </DialogContent>
+              </Dialog>
             </CardContent>
           </Card>
         </div>

@@ -2,7 +2,7 @@ import { Metadata } from "next"
 import { BrandDetails } from "@/components/brands/brand-details"
 
 // Mock data - replace with actual data from your backend
-const brands = [
+export const brands = [
   {
     id: "1",
     slug: "sigma-aldrich",
@@ -78,16 +78,9 @@ const brands = [
 ]
 
 export async function generateStaticParams() {
-  const params = brands.map((brand) => ({
+  return brands.map((brand) => ({
     slug: brand.slug,
   }))
-
-  // Add SVG file paths
-  const svgParams = brands.map((brand) => ({
-    slug: `${brand.slug}.svg`,
-  }))
-
-  return [...params, ...svgParams]
 }
 
 export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
@@ -106,17 +99,8 @@ export async function generateMetadata({ params }: { params: { slug: string } })
   }
 }
 
-export default async function BrandPage({ params }: { params: { slug: string } }) {
+export default function BrandPage({ params }: { params: { slug: string } }) {
   const brand = brands.find(b => b.slug === params.slug)
-
-  if (!brand) {
-    return (
-      <div className="container mx-auto px-4 py-8">
-        <h1 className="text-2xl font-bold mb-4">Brand Not Found</h1>
-        <p>The requested brand could not be found on ChemLab Synthesis.</p>
-      </div>
-    )
-  }
-
+  if (!brand) return null
   return <BrandDetails brand={brand} />
 } 
