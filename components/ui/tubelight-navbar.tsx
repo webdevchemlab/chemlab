@@ -29,17 +29,14 @@ export function NavBar({ items, className }: NavBarProps) {
 
     handleResize()
     window.addEventListener("resize", handleResize)
-    return () => window.removeEventListener("resize", handleResize)
+    return () => {
+      window.removeEventListener("resize", handleResize)
+    }
   }, [])
 
   return (
-    <div
-      className={cn(
-        "relative",
-        className,
-      )}
-    >
-      <div className="flex items-center gap-2 bg-slate-950/40 border border-slate-800 backdrop-blur-xl py-1.5 px-1.5 rounded-full shadow-lg">
+    <div className={cn("relative", className)}>
+      <div className="flex items-center justify-center gap-1 rounded-full">
         {items.map((item) => {
           const Icon = item.icon
           const isActive = pathname === item.url
@@ -49,8 +46,8 @@ export function NavBar({ items, className }: NavBarProps) {
               key={item.name}
               href={item.url}
               className={cn(
-                "relative cursor-pointer text-sm font-medium px-4 py-2 rounded-full transition-colors",
-                "text-white hover:text-cyan-200",
+                "relative cursor-pointer text-sm font-medium px-3 py-2 rounded-full transition-all duration-300",
+                "text-slate-300 hover:text-cyan-200",
                 isActive && "text-cyan-400"
               )}
             >

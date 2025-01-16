@@ -15,7 +15,6 @@ const genId = () => {
 export function useToast() {
   const toast = ({ title, description, variant = "default" }: ToastProps) => {
     const id = genId()
-    // Dispatch a custom event that will be handled by the Toaster component
     const event = new CustomEvent("toast", {
       detail: {
         id,

@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 import { LucideIcon } from "lucide-react";
 import { GlareCard } from "@/components/ui/glare-card";
+import { Particles } from "@/components/ui/particles";
 
 interface Category {
   name: string;
@@ -77,11 +78,18 @@ const categories: Category[] = [
 
 export function ProductCategories() {
   return (
-    <section className="py-16 bg-background">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+    <section className="relative py-16 bg-slate-950">
+      <Particles
+        className="absolute inset-0"
+        quantity={75}
+        ease={70}
+        color="#60A5FA"
+        size={0.3}
+      />
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="max-w-2xl mx-auto text-center mb-10">
-          <h2 className="text-3xl font-bold tracking-tight text-foreground">Product Categories</h2>
-          <p className="mt-4 text-lg text-muted-foreground">
+          <h2 className="text-3xl font-bold tracking-tight text-slate-100">Product Categories</h2>
+          <p className="mt-4 text-lg text-slate-400">
             Explore our comprehensive range of chemical products and laboratory supplies
           </p>
         </div>
@@ -96,7 +104,7 @@ export function ProductCategories() {
             >
               <Link href={category.href} className="block h-full">
                 <GlareCard>
-                  <div className="flex flex-col h-full p-6 group-hover:bg-slate-900/90 transition-colors">
+                  <div className="flex flex-col h-full p-6 bg-slate-900/50 backdrop-blur-sm group-hover:bg-slate-900/80 transition-colors">
                     <div className={`rounded-full p-3 w-12 h-12 flex items-center justify-center ${colorVariants[category.color]}`}>
                       <category.icon className="w-6 h-6" />
                     </div>
@@ -106,7 +114,7 @@ export function ProductCategories() {
                     <p className="mt-2 text-slate-300 flex-grow">
                       {category.description}
                     </p>
-                    <div className="mt-4 flex items-center text-sm font-medium text-slate-300">
+                    <div className="mt-4 flex items-center text-sm font-medium text-cyan-400">
                       <span className="group-hover:translate-x-1 transition-transform">Learn more</span>
                       <svg
                         className="w-4 h-4 ml-1 group-hover:translate-x-2 transition-transform"

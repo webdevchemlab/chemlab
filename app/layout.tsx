@@ -1,12 +1,17 @@
 import './globals.css'
-import { Inter } from 'next/font/google'
+import { Inter, Manrope } from 'next/font/google'
 import { ThemeProvider } from '@/components/theme-provider'
 import { Toaster } from '@/components/ui/toaster'
 import Header from '@/components/layout/header'
 import Footer from '@/components/layout/footer'
 import { metadata } from "./metadata"
+import { cn } from "@/lib/utils"
 
 const inter = Inter({ subsets: ['latin'] })
+const manrope = Manrope({ 
+  subsets: ["latin"],
+  variable: "--font-manrope",
+})
 
 export { metadata }
 
@@ -16,16 +21,23 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
-      <body className={inter.className}>
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+    <html lang="en" suppressHydrationWarning>
+      <body className={cn(
+        inter.className,
+        manrope.variable,
+        'min-h-screen bg-background font-sans antialiased'
+      )}>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="dark"
+          enableSystem
+          disableTransitionOnChange
+        >
           <Header />
-          <main className="flex-1">
-            {children}
-          </main>
+          {children}
           <Footer />
+          <Toaster />
         </ThemeProvider>
-        <Toaster />
       </body>
     </html>
   )

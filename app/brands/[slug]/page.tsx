@@ -1,8 +1,21 @@
 import { Metadata } from "next"
 import { BrandDetails } from "@/components/brands/brand-details"
 
+export interface Brand {
+  id: string
+  slug: string
+  name: string
+  description: string
+  logo: string
+  productCount: number
+  founded: string
+  headquarters: string
+  website: string
+  categories: string[]
+}
+
 // Mock data - replace with actual data from your backend
-export const brands = [
+const brands: Brand[] = [
   {
     id: "1",
     slug: "sigma-aldrich",
@@ -84,7 +97,7 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
-  const brand = brands.find(b => b.slug === params.slug || `${b.slug}.svg` === params.slug)
+  const brand = brands.find(b => b.slug === params.slug)
 
   if (!brand) {
     return {

@@ -1,5 +1,6 @@
 "use client"
 
+import { Brand } from "@/app/brands/[slug]/page"
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import {
@@ -10,19 +11,6 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-
-interface Brand {
-  id: string
-  slug: string
-  name: string
-  description: string
-  logo: string
-  productCount: number
-  founded: string
-  headquarters: string
-  website: string
-  categories: string[]
-}
 
 interface BrandDetailsProps {
   brand: Brand

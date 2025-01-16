@@ -9,6 +9,9 @@ import { motion } from "framer-motion"
 import { LampContainer } from "@/components/ui/lamp"
 import { ProductCategories } from "@/components/sections/product-categories"
 import { CardSpotlight } from "@/components/ui/card-spotlight"
+import { GradientButton } from "@/components/ui/gradient-button"
+import { GradientText } from "@/components/ui/gradient-text"
+import { Particles } from "@/components/ui/particles"
 
 const features = [
   {
@@ -92,36 +95,55 @@ export default function Home() {
             }}
             className="text-center"
           >
-            <h1 className="mt-8 bg-gradient-to-br from-slate-200 to-slate-400 py-4 bg-clip-text text-center text-4xl font-bold tracking-tight text-transparent md:text-7xl mb-6">
+            <GradientText
+              colors={["#60A5FA", "#34D399", "#60A5FA"]}
+              className="mt-8 text-center text-4xl font-bold tracking-tight md:text-7xl mb-4 font-manrope px-6 py-3"
+              showBorder
+              animationSpeed={6}
+            >
+              ChemLab Synthesis
+            </GradientText>
+            <GradientText
+              colors={["#F472B6", "#9333EA", "#F472B6"]}
+              className="text-center text-2xl font-bold tracking-tight md:text-5xl mb-6 font-manrope px-4"
+              animationSpeed={8}
+            >
               Your Trusted Partner for <br />Premium Laboratory Chemicals
-            </h1>
-            <p className="text-xl mb-8 text-slate-400 max-w-3xl mx-auto px-4">
+            </GradientText>
+            <p className="text-lg mb-8 text-slate-400 max-w-3xl mx-auto px-4 font-manrope">
               Authorized dealer for leading manufacturers. Serving research and educational institutions with high-quality chemicals and laboratory supplies.
             </p>
             <div className="flex flex-wrap gap-4 justify-center">
-              <Button asChild size="lg" variant="secondary">
+              <GradientButton asChild>
                 <Link href="/products">Browse Products</Link>
-              </Button>
-              <Button asChild size="lg" variant="outline" className="bg-transparent hover:bg-slate-800">
+              </GradientButton>
+              <GradientButton asChild variant="variant">
                 <Link href="/contact">Request Quote</Link>
-              </Button>
+              </GradientButton>
             </div>
           </motion.div>
         </LampContainer>
       </section>
 
       {/* Featured Brands */}
-      <section className="py-16 bg-gray-50">
-        <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-4">Trusted by Leading Manufacturers</h2>
-          <p className="text-lg text-gray-600 text-center mb-12 max-w-3xl mx-auto">
+      <section className="relative py-16 bg-slate-950">
+        <Particles
+          className="absolute inset-0"
+          quantity={50}
+          ease={100}
+          color="#60A5FA"
+          size={0.5}
+        />
+        <div className="container mx-auto px-4 relative z-10">
+          <h2 className="text-3xl font-bold text-center mb-4 text-slate-100">Trusted by Leading Manufacturers</h2>
+          <p className="text-lg text-slate-400 text-center mb-12 max-w-3xl mx-auto">
             We are authorized dealers for premium chemical and laboratory equipment manufacturers
           </p>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8">
             {brands.map((brand) => (
               <div 
                 key={brand.name} 
-                className="flex items-center justify-center p-6 bg-white rounded-lg shadow-sm hover:shadow-md transition-all grayscale hover:grayscale-0"
+                className="flex items-center justify-center p-6 bg-slate-900/50 backdrop-blur-sm rounded-lg shadow-lg hover:shadow-cyan-500/20 transition-all grayscale hover:grayscale-0"
               >
                 <div className="relative w-full aspect-[3/2]">
                   <Image
@@ -138,21 +160,37 @@ export default function Home() {
       </section>
 
       {/* Product Categories */}
-      <ProductCategories />
+      <section className="relative bg-slate-950">
+        <Particles
+          className="absolute inset-0"
+          quantity={75}
+          ease={70}
+          color="#F472B6"
+          size={0.3}
+        />
+        <div className="relative z-10">
+          <ProductCategories />
+        </div>
+      </section>
 
       {/* Why Choose Us */}
-      <section className="py-16 bg-slate-950">
-        <div className="container mx-auto px-4">
+      <section className="relative py-16 bg-slate-950">
+        <Particles
+          className="absolute inset-0"
+          quantity={60}
+          ease={90}
+          color="#34D399"
+          size={0.4}
+        />
+        <div className="container mx-auto px-4 relative z-10">
           <h2 className="text-3xl font-bold text-center mb-12 text-slate-100">Why Choose ChemLab Synthesis?</h2>
           <div className="grid md:grid-cols-3 gap-8">
             {features.map((feature) => (
-              <CardSpotlight key={feature.title} className="bg-transparent">
+              <CardSpotlight key={feature.title} className="bg-slate-900/50 backdrop-blur-sm border-slate-800/50">
                 <div className="relative z-10">
-                  <div className="mb-4 w-12 h-12 rounded-lg bg-blue-500/10 text-blue-400 flex items-center justify-center">
-                    <feature.icon className="w-6 h-6" />
-                  </div>
+                  <feature.icon className="w-10 h-10 text-cyan-500 mb-4" />
                   <h3 className="text-xl font-semibold mb-2 text-slate-100">{feature.title}</h3>
-                  <p className="text-slate-300">{feature.description}</p>
+                  <p className="text-slate-400">{feature.description}</p>
                 </div>
               </CardSpotlight>
             ))}
@@ -161,30 +199,27 @@ export default function Home() {
       </section>
 
       {/* Testimonials */}
-      <section className="py-16 bg-slate-950">
-        <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-4 text-slate-100">What Our Clients Say</h2>
-          <p className="text-lg text-slate-300 text-center mb-12 max-w-3xl mx-auto">
-            Trusted by leading research institutions and laboratories worldwide
-          </p>
+      <section className="relative py-16 bg-slate-950">
+        <Particles
+          className="absolute inset-0"
+          quantity={40}
+          ease={120}
+          color="#9333EA"
+          size={0.6}
+        />
+        <div className="container mx-auto px-4 relative z-10">
+          <h2 className="text-3xl font-bold text-center mb-12 text-slate-100">What Our Clients Say</h2>
           <div className="grid md:grid-cols-3 gap-8">
             {testimonials.map((testimonial) => (
-              <CardSpotlight key={testimonial.author} className="bg-transparent">
+              <CardSpotlight key={testimonial.author} className="bg-slate-900/50 backdrop-blur-sm border-slate-800/50">
                 <div className="relative z-10">
-                  <div className="mb-4 text-blue-400">
-                    <Quote className="w-8 h-8" />
-                  </div>
-                  <p className="text-slate-300 text-lg font-medium mb-6">
-                    "{testimonial.quote}"
-                  </p>
-                  <div>
-                    <h3 className="text-lg font-semibold mb-1 text-slate-100">{testimonial.author}</h3>
-                    <p className="text-slate-400">
-                      {testimonial.role}
-                      <br />
-                      {testimonial.institution}
-                    </p>
-                  </div>
+                  <Quote className="w-10 h-10 text-cyan-500 mb-4" />
+                  <blockquote className="text-slate-300 mb-4">{testimonial.quote}</blockquote>
+                  <cite className="not-italic">
+                    <div className="font-semibold text-slate-200">{testimonial.author}</div>
+                    <div className="text-cyan-500">{testimonial.role}</div>
+                    <div className="text-slate-400">{testimonial.institution}</div>
+                  </cite>
                 </div>
               </CardSpotlight>
             ))}
