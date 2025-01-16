@@ -1,10 +1,11 @@
 "use client"
 
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import Image from "next/image"
 import Link from "next/link"
 import { motion } from "framer-motion"
+import { Particles } from "@/components/ui/particles"
+import { GridBackground } from "@/components/ui/glowing-card"
 
 // Mock data - replace with actual data from your backend
 const brands = [
@@ -54,12 +55,19 @@ const brands = [
 
 export default function BrandsPage() {
   return (
-    <div className="min-h-screen bg-background py-12">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="relative min-h-screen bg-slate-950 py-12 overflow-hidden">
+      <Particles
+        className="absolute inset-0 z-0"
+        quantity={100}
+        ease={100}
+        color="#60A5FA"
+        size={0.5}
+      />
+      <div className="container relative z-10 mx-auto px-4 sm:px-6 lg:px-8 pt-20">
         {/* Header */}
-        <div className="mb-12 text-center">
-          <h1 className="text-4xl font-bold tracking-tight text-foreground">Our Partner Brands</h1>
-          <p className="mt-4 text-lg text-muted-foreground max-w-2xl mx-auto">
+        <div className="mb-16 text-center">
+          <h1 className="text-4xl font-bold tracking-tight text-slate-100 mb-6">Our Partner Brands</h1>
+          <p className="mt-4 text-lg text-slate-400 max-w-2xl mx-auto">
             We collaborate with leading manufacturers to provide you with the highest quality chemicals, laboratory equipment, and supplies.
           </p>
         </div>
@@ -74,29 +82,30 @@ export default function BrandsPage() {
               viewport={{ once: true }}
               transition={{ duration: 0.5 }}
             >
-              <Link href={`/brands/${brand.id}`}>
-                <Card className="h-full hover:shadow-lg transition-shadow">
-                  <CardHeader>
-                    <div className="h-20 relative mb-4">
-                      <Image
-                        src={brand.logo}
-                        alt={brand.name}
-                        fill
-                        className="object-contain"
-                      />
-                    </div>
-                    <CardTitle>{brand.name}</CardTitle>
-                    <CardDescription>{brand.description}</CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="flex justify-between items-center">
-                      <span className="text-sm text-muted-foreground">
-                        {brand.productCount}+ Products
-                      </span>
-                      <Button variant="ghost">View Products</Button>
-                    </div>
-                  </CardContent>
-                </Card>
+              <Link href={`/brands/${brand.id}`} className="block h-full">
+                <GridBackground
+                  title={brand.name}
+                  description={brand.description}
+                  showAvailability={false}
+                  className="h-full group hover:scale-[1.02] transition-all duration-300"
+                >
+                  <div className="h-20 relative mb-4">
+                    <Image
+                      src={brand.logo}
+                      alt={brand.name}
+                      fill
+                      className="object-contain brightness-125"
+                    />
+                  </div>
+                  <div className="flex justify-between items-center mt-4 pt-4 border-t border-slate-800/50">
+                    <span className="text-sm text-slate-400">
+                      {brand.productCount}+ Products
+                    </span>
+                    <Button variant="ghost" className="text-cyan-400 hover:text-cyan-300 hover:bg-cyan-950/30">
+                      View Products
+                    </Button>
+                  </div>
+                </GridBackground>
               </Link>
             </motion.div>
           ))}
