@@ -11,6 +11,7 @@ import {
   GlassWater
 } from "lucide-react";
 import { LucideIcon } from "lucide-react";
+import { GlareCard } from "@/components/ui/glare-card";
 
 interface Category {
   name: string;
@@ -91,36 +92,38 @@ export function ProductCategories() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
+              className="h-[300px] group"
             >
-              <Link
-                href={category.href}
-                className="group flex flex-col h-full p-6 bg-background rounded-lg border border-border hover:border-foreground/20 transition-colors"
-              >
-                <div className={`rounded-full p-3 w-12 h-12 flex items-center justify-center ${colorVariants[category.color]}`}>
-                  <category.icon className="w-6 h-6" />
-                </div>
-                <h3 className="mt-4 text-xl font-semibold text-foreground group-hover:text-foreground/90">
-                  {category.name}
-                </h3>
-                <p className="mt-2 text-muted-foreground flex-grow">
-                  {category.description}
-                </p>
-                <div className="mt-4 flex items-center text-sm font-medium text-foreground/60 group-hover:text-foreground">
-                  Learn more
-                  <svg
-                    className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M9 5l7 7-7 7"
-                    />
-                  </svg>
-                </div>
+              <Link href={category.href} className="block h-full">
+                <GlareCard>
+                  <div className="flex flex-col h-full p-6 group-hover:bg-slate-900/90 transition-colors">
+                    <div className={`rounded-full p-3 w-12 h-12 flex items-center justify-center ${colorVariants[category.color]}`}>
+                      <category.icon className="w-6 h-6" />
+                    </div>
+                    <h3 className="mt-4 text-xl font-semibold text-slate-100">
+                      {category.name}
+                    </h3>
+                    <p className="mt-2 text-slate-300 flex-grow">
+                      {category.description}
+                    </p>
+                    <div className="mt-4 flex items-center text-sm font-medium text-slate-300">
+                      <span className="group-hover:translate-x-1 transition-transform">Learn more</span>
+                      <svg
+                        className="w-4 h-4 ml-1 group-hover:translate-x-2 transition-transform"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M9 5l7 7-7 7"
+                        />
+                      </svg>
+                    </div>
+                  </div>
+                </GlareCard>
               </Link>
             </motion.div>
           ))}
