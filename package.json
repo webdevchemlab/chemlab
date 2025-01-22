@@ -43,6 +43,7 @@
     "clsx": "2.0.0",
     "cmdk": "0.2.0",
     "date-fns": "2.30.0",
+    "firebase": "^10.5.2",
     "framer-motion": "10.16.4",
     "lucide-react": "0.279.0",
     "next": "13.4.19",
@@ -56,7 +57,8 @@
     "tailwindcss": "3.3.3",
     "tailwindcss-animate": "1.0.7",
     "three": "0.157.0",
-    "zod": "3.22.2"
+    "zod": "3.22.2",
+    "razorpay": "^2.9.2"
   },
   "devDependencies": {
     "@types/node": "20.8.7",
@@ -65,6 +67,9 @@
     "@types/three": "0.157.2",
     "eslint": "8.52.0",
     "eslint-config-next": "13.4.19",
-    "typescript": "5.2.2"
+    "typescript": "5.2.2",
+    "postcss": "^8.4.31",
+    "tailwindcss": "^3.3.5",
+    "autoprefixer": "^10.4.16"
   }
 }
