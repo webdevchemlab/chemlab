@@ -34,28 +34,29 @@ const features = [
 const brands = [
   {
     name: "Sigma-Aldrich",
-    logo: "/images/brands/sigma-aldrich.svg",
+    subtitle: "Research Chemicals",
+    logo: "https://www.sigmaaldrich.com/static/logos/purple/merck.svg",
   },
   {
     name: "Merck",
-    logo: "/images/brands/merck.svg",
+    subtitle: "Life Science",
+    logo: "https://www.sigmaaldrich.com/static/logos/purple/merck.svg",
   },
   {
     name: "SRL",
-    logo: "/images/brands/srl.svg",
+    subtitle: "Laboratory Chemicals",
+    logo: "https://www.srlchem.com/SRL/images/logo1.png",
   },
   {
     name: "Honeywell",
-    logo: "/images/brands/honeywell.svg",
+    subtitle: "Research & Chemicals",
+    logo: "/brands/honeywell.svg",
   },
   {
     name: "Thermo Fisher",
-    logo: "/images/brands/thermo-fisher.svg",
+    subtitle: "Scientific Solutions",
+    logo: "/brands/thermo-fischer.svg",
   },
-  {
-    name: "Borosil",
-    logo: "/images/brands/borosil.svg",
-  }
 ]
 
 const testimonials = [
@@ -139,20 +140,30 @@ export default function Home() {
           <p className="text-lg text-slate-400 text-center mb-12 max-w-3xl mx-auto">
             We are authorized dealers for premium chemical and laboratory equipment manufacturers
           </p>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8">
             {brands.map((brand) => (
               <div 
                 key={brand.name} 
-                className="flex items-center justify-center p-6 bg-slate-900/50 backdrop-blur-sm rounded-lg shadow-lg hover:shadow-cyan-500/20 transition-all grayscale hover:grayscale-0"
+                className="flex flex-col items-center justify-center p-6 bg-slate-900/50 backdrop-blur-sm rounded-lg shadow-lg hover:shadow-cyan-500/20 transition-all duration-300 hover:scale-105 group"
               >
-                <div className="relative w-full aspect-[3/2]">
+                <div className="relative w-full aspect-[3/2] mb-3">
                   <Image
                     src={brand.logo}
                     alt={`${brand.name} logo`}
                     fill
-                    className="object-contain"
+                    className={`object-contain transition-all duration-300 ${
+                      brand.name === "SRL" || brand.name === "Merck" || brand.name === "Sigma-Aldrich"
+                        ? "filter brightness-100 hover:brightness-110"
+                        : "filter brightness-0 invert opacity-75 hover:brightness-100 hover:invert-0 hover:opacity-100"
+                    }`}
                   />
                 </div>
+                <span className="text-sm font-medium text-slate-100 group-hover:text-cyan-400 transition-colors text-center">
+                  {brand.name}
+                </span>
+                <span className="text-xs text-slate-400 group-hover:text-slate-300 transition-colors text-center mt-1">
+                  {brand.subtitle}
+                </span>
               </div>
             ))}
           </div>

@@ -33,45 +33,45 @@ const colorVariants = {
 
 const categories: Category[] = [
   {
-    name: "Organic Chemicals",
-    description: "Comprehensive selection of organic compounds for synthesis and analysis.",
+    name: "Fine Chemicals",
+    description: "High-purity chemicals for research, analysis, and synthesis",
     icon: BeakerIcon,
-    href: "/categories/organic-chemicals",
+    href: "/products/fine-chemicals",
     color: "blue"
   },
   {
-    name: "Inorganic Chemicals",
-    description: "Essential inorganic compounds for various laboratory applications.",
+    name: "Analytical Reagents",
+    description: "Premium grade reagents for precise analytical applications",
     icon: FlaskConical,
-    href: "/categories/inorganic-chemicals",
+    href: "/products/analytical-reagents",
     color: "green"
   },
   {
-    name: "Solvents",
-    description: "High-purity solvents for chromatography, extraction, and more.",
+    name: "Life Science",
+    description: "Specialized products for life science research and biotechnology",
     icon: Droplets,
-    href: "/categories/solvents",
+    href: "/products/life-science",
     color: "purple"
   },
   {
-    name: "Reagents",
-    description: "Wide array of reagents for chemical reactions and analysis.",
+    name: "Chromatography",
+    description: "High-quality products for all chromatography applications",
     icon: TestTubes,
-    href: "/categories/reagents",
+    href: "/products/chromatography",
     color: "orange"
   },
   {
-    name: "Lab Equipment",
-    description: "Quality laboratory equipment for precise measurements and analysis.",
+    name: "Clinical Diagnostics",
+    description: "Reliable solutions for clinical and diagnostic testing",
     icon: Microscope,
-    href: "/categories/lab-equipment",
+    href: "/products/clinical-diagnostics",
     color: "indigo"
   },
   {
-    name: "Glassware",
-    description: "Premium laboratory glassware for all your research needs.",
+    name: "Lab Supplies",
+    description: "Essential laboratory supplies and consumables",
     icon: GlassWater,
-    href: "/categories/glassware",
+    href: "/products/lab-supplies",
     color: "pink"
   }
 ];

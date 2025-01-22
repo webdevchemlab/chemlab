@@ -190,7 +190,7 @@ export default function CategoryContent({ categoryId }: { categoryId: string }) 
                     <Button
                       variant="outline"
                       className="text-cyan-500 border-cyan-500/20 hover:bg-cyan-500/10"
-                      onClick={() => window.location.href = `/productstest/products/${product.id}`}
+                      onClick={() => window.location.href = `/products/products/${product.id}`}
                     >
                       View Details
                     </Button>

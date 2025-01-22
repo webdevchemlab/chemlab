@@ -11,6 +11,10 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'www.srlchem.com',
       },
+      {
+        protocol: 'https',
+        hostname: 'www.sigmaaldrich.com',
+      },
     ],
   },
 };

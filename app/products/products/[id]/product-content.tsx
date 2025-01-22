@@ -24,7 +24,7 @@ export default function ProductContent({ productId }: { productId: string }) {
     <div className="min-h-screen bg-slate-950 py-12">
       <div className="container mx-auto px-4">
         {/* Back Button */}
-        <Link href="/productstest">
+        <Link href="/products">
           <Button variant="ghost" className="mb-8 text-slate-400 hover:text-slate-100">
             <ArrowLeft className="h-4 w-4 mr-2" />
             Back to Products

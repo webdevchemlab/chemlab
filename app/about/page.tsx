@@ -1,12 +1,13 @@
-import type { Metadata } from "next"
+"use client"
+
 import { Container } from "@/components/ui/container"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { BeakerIcon, Award, Users, ShieldCheck, Scale, Microscope } from "lucide-react"
-
-export const metadata: Metadata = {
-  title: "About Us | ChemLab Synthesis",
-  description: "Learn about ChemLab Synthesis, your trusted partner for high-quality laboratory chemicals and research materials.",
-}
+import { motion } from "framer-motion"
+import { LampContainer } from "@/components/ui/lamp"
+import { Particles } from "@/components/ui/particles"
+import { GradientText } from "@/components/ui/gradient-text"
+import { CardSpotlight } from "@/components/ui/card-spotlight"
 
 const values = [
   {
@@ -40,25 +41,59 @@ export default function AboutPage() {
   return (
     <div className="flex-1">
       {/* Hero Section */}
-      <section className="bg-gradient-to-r from-blue-600 to-blue-800 py-20 text-white">
-        <Container>
-          <div className="mx-auto max-w-3xl text-center">
-            <BeakerIcon className="mx-auto h-16 w-16 text-blue-200" />
-            <h1 className="mt-4 text-4xl font-bold">About ChemLab Synthesis</h1>
-            <p className="mt-6 text-xl text-blue-100">
+      <section className="relative bg-slate-950 overflow-hidden">
+        <LampContainer>
+          <motion.div
+            initial={{ opacity: 0.5, y: 100 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{
+              delay: 0.3,
+              duration: 0.8,
+              ease: "easeInOut",
+            }}
+            className="text-center"
+          >
+            <BeakerIcon className="mx-auto h-16 w-16 text-cyan-400" />
+            <GradientText
+              colors={["#60A5FA", "#34D399", "#60A5FA"]}
+              className="mt-8 text-center text-4xl font-bold tracking-tight md:text-6xl mb-4 font-manrope px-6 py-3"
+              showBorder
+              animationSpeed={6}
+            >
+              About ChemLab Synthesis
+            </GradientText>
+            <p className="text-lg mb-8 text-slate-400 max-w-3xl mx-auto px-4 font-manrope">
               Your trusted partner in providing high-quality chemicals and laboratory supplies for research, 
               education, and industrial applications.
             </p>
-          </div>
-        </Container>
+          </motion.div>
+        </LampContainer>
       </section>
 
       {/* Company Overview */}
-      <section className="py-16">
-        <Container>
-          <div className="mx-auto max-w-3xl">
-            <h2 className="text-3xl font-bold">Our Story</h2>
-            <div className="mt-6 space-y-6 text-lg text-muted-foreground">
+      <section className="relative py-16 bg-slate-950">
+        <Particles
+          className="absolute inset-0"
+          quantity={50}
+          ease={100}
+          color="#60A5FA"
+          size={0.5}
+        />
+        <Container className="relative z-10">
+          <motion.div 
+            className="mx-auto max-w-3xl"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+          >
+            <GradientText
+              colors={["#60A5FA", "#34D399", "#60A5FA"]}
+              className="text-3xl font-bold mb-6"
+              animationSpeed={8}
+            >
+              Our Story
+            </GradientText>
+            <div className="mt-6 space-y-6 text-lg text-slate-400">
               <p>
                 ChemLab Synthesis was founded with a vision to provide researchers, educational institutions, 
                 and industries with reliable access to high-quality chemical products. As authorized dealers 
@@ -71,34 +106,65 @@ export default function AboutPage() {
                 to offer an extensive range of authentic chemicals and laboratory supplies to our customers.
               </p>
             </div>
-          </div>
+          </motion.div>
         </Container>
       </section>
 
       {/* Mission & Values */}
-      <section className="bg-muted/50 py-16">
-        <Container>
-          <div className="mx-auto max-w-3xl text-center">
-            <h2 className="text-3xl font-bold">Our Mission</h2>
-            <p className="mt-6 text-lg text-muted-foreground">
+      <section className="relative py-16 bg-slate-900/50">
+        <Particles
+          className="absolute inset-0"
+          quantity={30}
+          ease={70}
+          color="#F472B6"
+          size={0.3}
+        />
+        <Container className="relative z-10">
+          <motion.div 
+            className="mx-auto max-w-3xl text-center"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+          >
+            <GradientText
+              colors={["#F472B6", "#9333EA", "#F472B6"]}
+              className="text-3xl font-bold mb-6"
+              animationSpeed={8}
+            >
+              Our Mission
+            </GradientText>
+            <p className="mt-6 text-lg text-slate-400">
               To empower scientific research and industrial progress by providing reliable access to 
               high-quality chemicals and laboratory supplies, backed by exceptional service and expertise.
             </p>
-          </div>
+          </motion.div>
 
           <div className="mt-16">
-            <h2 className="text-center text-3xl font-bold">Our Values</h2>
+            <GradientText
+              colors={["#60A5FA", "#34D399", "#60A5FA"]}
+              className="text-3xl font-bold mb-12 text-center"
+              animationSpeed={8}
+            >
+              Our Values
+            </GradientText>
             <div className="mt-12 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-              {values.map((value) => (
-                <Card key={value.title} className="bg-background">
-                  <CardHeader>
-                    <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-blue-100 text-blue-600">
-                      <value.icon className="h-6 w-6" />
-                    </div>
-                    <CardTitle>{value.title}</CardTitle>
-                    <CardDescription>{value.description}</CardDescription>
-                  </CardHeader>
-                </Card>
+              {values.map((value, index) => (
+                <motion.div
+                  key={value.title}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                >
+                  <CardSpotlight className="h-full bg-slate-900/50 backdrop-blur-sm border-slate-800/50">
+                    <CardHeader>
+                      <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-slate-800 text-cyan-500">
+                        <value.icon className="h-6 w-6" />
+                      </div>
+                      <CardTitle className="text-slate-100">{value.title}</CardTitle>
+                      <CardDescription className="text-slate-400">{value.description}</CardDescription>
+                    </CardHeader>
+                  </CardSpotlight>
+                </motion.div>
               ))}
             </div>
           </div>
@@ -106,11 +172,29 @@ export default function AboutPage() {
       </section>
 
       {/* Quality Commitment */}
-      <section className="py-16">
-        <Container>
-          <div className="mx-auto max-w-3xl">
-            <h2 className="text-3xl font-bold">Our Commitment to Quality</h2>
-            <div className="mt-6 space-y-6 text-lg text-muted-foreground">
+      <section className="relative py-16 bg-slate-950">
+        <Particles
+          className="absolute inset-0"
+          quantity={40}
+          ease={90}
+          color="#60A5FA"
+          size={0.4}
+        />
+        <Container className="relative z-10">
+          <motion.div 
+            className="mx-auto max-w-3xl"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+          >
+            <GradientText
+              colors={["#60A5FA", "#34D399", "#60A5FA"]}
+              className="text-3xl font-bold mb-6"
+              animationSpeed={8}
+            >
+              Our Commitment to Quality
+            </GradientText>
+            <div className="mt-6 space-y-6 text-lg text-slate-400">
               <p>
                 At ChemLab Synthesis, quality is not just a promise – it's our foundation. We maintain 
                 strict quality control processes and work only with certified manufacturers to ensure 
@@ -122,9 +206,9 @@ export default function AboutPage() {
                 and operations depend on the quality and reliability of your chemical supplies.
               </p>
             </div>
-          </div>
+          </motion.div>
         </Container>
       </section>
     </div>
   )
-} 
+}
