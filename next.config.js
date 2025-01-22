@@ -15,6 +15,8 @@ const nextConfig = {
       },
     ],
   },
+  // Disable SWC minification
+  swcMinify: false,
 };
 
 module.exports = nextConfig;
