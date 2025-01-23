@@ -4,13 +4,19 @@ import { useState } from "react"
 import { motion } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { Search, Filter, ChevronDown } from "lucide-react"
+import { Search, Filter, ChevronDown, BeakerIcon } from "lucide-react"
 import { categories } from "@/data/categories"
 import type { Product } from "@/types/product"
-import { featuredProducts } from "@/data/products"
+import { featuredProducts, getProductsByCategory } from "@/data/products"
 import { brands } from "@/data/brands"
+import Image from "next/image"
+import Link from "next/link"
 
-export default function CategoryContent({ categoryId }: { categoryId: string }) {
+interface CategoryContentProps {
+  categoryId: string
+}
+
+export default function CategoryContent({ categoryId }: CategoryContentProps) {
   const category = categories.find(cat => cat.id === categoryId)
   const [searchQuery, setSearchQuery] = useState("")
   const [selectedSubcategories, setSelectedSubcategories] = useState<string[]>([])
