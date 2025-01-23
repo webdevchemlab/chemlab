@@ -1,5 +1,5 @@
 import { categories } from "@/data/categories"
-import CategoryContent from "./category-content"
+import CategoryContent from "./CategoryContent"
 
 export async function generateStaticParams() {
   return categories.map((category) => ({
