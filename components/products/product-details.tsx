@@ -148,83 +148,39 @@ export function ProductDetails({ product }: ProductDetailsProps) {
                   </TabsTrigger>
                   <TabsTrigger value="safety">
                     <ShieldAlert className="w-4 h-4 mr-2" />
-                    Safety
-                  </TabsTrigger>
-                  <TabsTrigger value="documents">
-                    <FileText className="w-4 h-4 mr-2" />
-                    Documents
+                    Safety & Applications
                   </TabsTrigger>
                 </TabsList>
                 <TabsContent value="specifications">
                   <div className="grid grid-cols-2 gap-4">
-                    <div>
-                      <h4 className="font-medium">Appearance</h4>
-                      <p>{product.specifications.appearance}</p>
-                    </div>
-                    <div>
-                      <h4 className="font-medium">Solubility</h4>
-                      <p>{product.specifications.solubility}</p>
-                    </div>
-                    <div>
-                      <h4 className="font-medium">pH</h4>
-                      <p>{product.specifications.ph}</p>
-                    </div>
-                    <div>
-                      <h4 className="font-medium">Density</h4>
-                      <p>{product.specifications.density}</p>
-                    </div>
-                    <div>
-                      <h4 className="font-medium">Melting Point</h4>
-                      <p>{product.specifications.meltingPoint}</p>
-                    </div>
-                    <div>
-                      <h4 className="font-medium">Boiling Point</h4>
-                      <p>{product.specifications.boilingPoint}</p>
-                    </div>
+                    {product.specifications?.map((spec, index) => (
+                      <div key={index}>
+                        <p>{spec}</p>
+                      </div>
+                    ))}
                   </div>
                 </TabsContent>
                 <TabsContent value="safety">
                   <div className="space-y-4">
                     <div>
-                      <h4 className="font-medium mb-2">Hazard Statements</h4>
+                      <h4 className="font-medium mb-2">Applications</h4>
                       <ul className="list-disc pl-5">
-                        {product.safetyInfo.hazards.map((hazard, index) => (
-                          <li key={index}>{hazard}</li>
+                        {product.applications?.map((application, index) => (
+                          <li key={index}>{application}</li>
                         ))}
                       </ul>
                     </div>
                     <div>
-                      <h4 className="font-medium mb-2">Precautionary Statements</h4>
-                      <ul className="list-disc pl-5">
-                        {product.safetyInfo.precautions.map((precaution, index) => (
-                          <li key={index}>{precaution}</li>
-                        ))}
-                      </ul>
-                    </div>
-                    <div>
-                      <h4 className="font-medium mb-2">Storage</h4>
-                      <ul className="list-disc pl-5">
-                        {product.safetyInfo.storage.map((item, index) => (
-                          <li key={index}>{item}</li>
-                        ))}
-                      </ul>
-                    </div>
-                  </div>
-                </TabsContent>
-                <TabsContent value="documents">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    {product.documents.map((doc, index) => (
+                      <h4 className="font-medium mb-2">MSDS</h4>
                       <Button
-                        key={index}
                         variant="outline"
                         className="justify-start"
-                        onClick={() => handleDocumentDownload(doc)}
+                        onClick={() => window.open(product.msdsUrl, '_blank')}
                       >
                         <Download className="w-4 h-4 mr-2" />
-                        {doc.name}
-                        {doc.fileSize && <span className="ml-2 text-sm text-muted-foreground">({doc.fileSize})</span>}
+                        Download MSDS
                       </Button>
-                    ))}
+                    </div>
                   </div>
                 </TabsContent>
               </Tabs>
