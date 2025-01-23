@@ -51,6 +51,7 @@
     "lucide-react": "0.279.0",
     "next": "13.4.19",
     "next-themes": "0.2.1",
+    "payload": "^3.18.0",
     "postcss": "^8.4.31",
     "razorpay": "^2.9.2",
     "react": "18.2.0",
