@@ -1,6 +1,6 @@
 import { Metadata } from "next"
 import { featuredProducts } from "@/data/products"
-import ProductDetail from "./product-detail"
+import { ProductDetail } from "./product-detail"
 
 // Generate static params for all product pages
 export async function generateStaticParams() {
