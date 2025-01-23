@@ -8,7 +8,8 @@ import Link from "next/link"
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { useState } from "react"
-import { Product, featuredProducts, searchProducts } from "@/data/products"
+import type { Product } from "@/types/product"
+import { featuredProducts, searchProducts } from "@/data/products"
 import { brands } from "@/data/brands"
 import { categories } from "@/data/categories"
 import { LampContainer } from "@/components/ui/lamp"
@@ -28,6 +29,54 @@ export default function ProductsPage() {
       setSearchResults(searchProducts(query))
     }
   }
+
+  const ProductCard = ({ product }: { product: Product }) => (
+    <div className="group relative overflow-hidden rounded-lg bg-slate-900/50 p-6 hover:bg-slate-900/80 transition-all duration-300 border border-slate-800/50 hover:border-cyan-500/50">
+      <div className="mb-4">
+        <h3 className="text-lg font-semibold text-slate-100 group-hover:text-cyan-400 transition-colors">
+          {product.name}
+        </h3>
+        <div className="text-sm text-cyan-500 mb-2">{product.manufacturer}</div>
+        <p className="text-sm text-slate-400 mb-4 line-clamp-2">
+          {product.description}
+        </p>
+      </div>
+      <div className="space-y-2">
+        <div className="flex items-center justify-between text-sm">
+          <span className="text-slate-500">CAS Number:</span>
+          <span className="text-slate-300">{product.casNumber}</span>
+        </div>
+        {product.grade && (
+          <div className="flex items-center justify-between text-sm">
+            <span className="text-slate-500">Grade:</span>
+            <span className="text-slate-300">{product.grade}</span>
+          </div>
+        )}
+        {product.purity && (
+          <div className="flex items-center justify-between text-sm">
+            <span className="text-slate-500">Purity:</span>
+            <span className="text-slate-300">{product.purity}</span>
+          </div>
+        )}
+      </div>
+      <div className="mt-6 flex items-center justify-between">
+        <Button
+          variant="outline"
+          className="text-cyan-500 border-cyan-500/20 hover:bg-cyan-500/10"
+          onClick={() => window.location.href = `/products/${product.category}/${product.id}`}
+        >
+          View Details
+        </Button>
+        <Button
+          variant="default"
+          className="bg-cyan-500 hover:bg-cyan-600 text-white"
+          onClick={() => window.location.href = `/quote-request?product=${product.id}`}
+        >
+          Request Quote
+        </Button>
+      </div>
+    </div>
+  )
 
   return (
     <div className="relative min-h-screen bg-slate-950 overflow-hidden">
@@ -161,41 +210,8 @@ export default function ProductsPage() {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: index * 0.1 }}
-                  className="group relative overflow-hidden rounded-lg bg-slate-900/50 p-6 hover:bg-slate-900/80 transition-all duration-300 border border-slate-800/50 hover:border-cyan-500/50"
                 >
-                  <div className="mb-4">
-                    <h3 className="text-lg font-semibold text-slate-100 group-hover:text-cyan-400 transition-colors">
-                      {product.name}
-                    </h3>
-                    <div className="text-sm text-cyan-500 mb-2">{product.brand}</div>
-                    <p className="text-sm text-slate-400 mb-4 line-clamp-2">
-                      {product.description}
-                    </p>
-                  </div>
-                  <div className="space-y-2">
-                    {Object.entries(product.specifications).slice(0, 4).map(([key, value]) => (
-                      <div key={key} className="flex items-center justify-between text-sm">
-                        <span className="text-slate-500 capitalize">{key}:</span>
-                        <span className="text-slate-300">{value}</span>
-                      </div>
-                    ))}
-                  </div>
-                  <div className="mt-6 flex items-center justify-between">
-                    <Button
-                      variant="outline"
-                      className="text-cyan-500 border-cyan-500/20 hover:bg-cyan-500/10"
-                      onClick={() => window.location.href = `/products/products/${product.id}`}
-                    >
-                      View Details
-                    </Button>
-                    <Button
-                      variant="default"
-                      className="bg-cyan-500 hover:bg-cyan-600 text-white"
-                      onClick={() => window.location.href = `/products/quote-request?product=${product.id}`}
-                    >
-                      Request Quote
-                    </Button>
-                  </div>
+                  <ProductCard product={product} />
                 </motion.div>
               ))}
             </div>
@@ -212,41 +228,8 @@ export default function ProductsPage() {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: index * 0.1 }}
-                  className="group relative overflow-hidden rounded-lg bg-slate-900/50 p-6 hover:bg-slate-900/80 transition-all duration-300 border border-slate-800/50 hover:border-cyan-500/50"
                 >
-                  <div className="mb-4">
-                    <h3 className="text-lg font-semibold text-slate-100 group-hover:text-cyan-400 transition-colors">
-                      {product.name}
-                    </h3>
-                    <div className="text-sm text-cyan-500 mb-2">{product.brand}</div>
-                    <p className="text-sm text-slate-400 mb-4 line-clamp-2">
-                      {product.description}
-                    </p>
-                  </div>
-                  <div className="space-y-2">
-                    {Object.entries(product.specifications).slice(0, 4).map(([key, value]) => (
-                      <div key={key} className="flex items-center justify-between text-sm">
-                        <span className="text-slate-500 capitalize">{key}:</span>
-                        <span className="text-slate-300">{value}</span>
-                      </div>
-                    ))}
-                  </div>
-                  <div className="mt-6 flex items-center justify-between">
-                    <Button
-                      variant="outline"
-                      className="text-cyan-500 border-cyan-500/20 hover:bg-cyan-500/10"
-                      onClick={() => window.location.href = `/products/products/${product.id}`}
-                    >
-                      View Details
-                    </Button>
-                    <Button
-                      variant="default"
-                      className="bg-cyan-500 hover:bg-cyan-600 text-white"
-                      onClick={() => window.location.href = `/products/quote-request?product=${product.id}`}
-                    >
-                      Request Quote
-                    </Button>
-                  </div>
+                  <ProductCard product={product} />
                 </motion.div>
               ))}
             </div>
