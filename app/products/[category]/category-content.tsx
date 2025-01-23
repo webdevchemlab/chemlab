@@ -6,7 +6,8 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Search, Filter, ChevronDown } from "lucide-react"
 import { categories } from "@/data/categories"
-import { Product, featuredProducts } from "@/data/products"
+import type { Product } from "@/types/product"
+import { featuredProducts } from "@/data/products"
 import { brands } from "@/data/brands"
 
 export default function CategoryContent({ categoryId }: { categoryId: string }) {
