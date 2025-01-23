@@ -13,7 +13,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import * as z from "zod"
 import { useToast } from "@/components/ui/use-toast"
-import type { Product } from "@/app/products/[id]/page"
+import type { Product } from "@/types/product"
 
 const quoteFormSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
