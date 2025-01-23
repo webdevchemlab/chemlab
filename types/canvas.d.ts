@@ -3,7 +3,7 @@ declare module 'canvas' {
     width: number;
     height: number;
     getContext(contextId: '2d'): CanvasRenderingContext2D;
-    toBuffer(): Buffer;
+    toBuffer(format?: string): Buffer;
   }
 
   export interface CanvasRenderingContext2D {
