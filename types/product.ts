@@ -1,3 +1,19 @@
+export type ProductCategory =
+  | "organic-chemicals"
+  | "inorganic-chemicals"
+  | "solvents"
+  | "reagents"
+  | "analytical-standards"
+  | "laboratory-glassware";
+
+export interface PackagingSize {
+  id: string;
+  size: string;
+  unit: string;
+  sku: string;
+  price?: number;
+}
+
 export interface Product {
   id: string;
   name: string;
@@ -16,22 +32,6 @@ export interface Product {
   inStock: boolean;
   featured?: boolean;
 }
-
-export interface PackagingSize {
-  id: string;
-  size: string;
-  unit: string;
-  sku: string;
-  price?: number; // Optional if prices are quote-based
-}
-
-export type ProductCategory =
-  | "organic-chemicals"
-  | "inorganic-chemicals"
-  | "solvents"
-  | "reagents"
-  | "analytical-standards"
-  | "laboratory-glassware";
 
 export interface ProductFilter {
   category?: ProductCategory;

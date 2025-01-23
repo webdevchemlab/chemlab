@@ -1,152 +1,81 @@
-export interface Product {
-  id: string
-  name: string
-  brand: string
-  category: string
-  subcategory: string
-  catalogNumber: string
-  description: string
-  image: string
-  fallbackImage: string
-  specifications: {
-    grade?: string
-    purity?: string
-    packaging?: string
-    casNumber?: string
-    molecularWeight?: string
-    meltingPoint?: string
-    boilingPoint?: string
-    density?: string
-    form?: string
-    concentration?: string
-    solubility?: string
-    storage?: string
-    hazards?: string[]
-    applications?: string[]
-  }
-  price?: {
-    value: number
-    currency: string
-    unit: string
-  }
-  stock?: {
-    status: 'in-stock' | 'low-stock' | 'out-of-stock'
-    quantity?: number
-    unit?: string
-  }
-}
+import { Product } from "@/types/product"
 
-export const featuredProducts: Product[] = [
+export const products: Product[] = [
   {
-    id: "sodium-chloride-ar",
-    name: "Sodium Chloride AR Grade",
-    brand: "SRL",
-    category: "fine-chemicals",
-    subcategory: "Inorganic Chemicals",
-    catalogNumber: "192800",
-    description: "High purity sodium chloride suitable for analytical research. This AR grade product ensures reliable results in your analytical procedures.",
-    image: "/images/products/chemicals/sodium-chloride.jpg",
-    fallbackImage: "/images/products/placeholder-chemical.jpg",
-    specifications: {
-      grade: "AR Grade",
-      purity: "≥99.5%",
-      packaging: "500g",
-      casNumber: "7647-14-5",
-      molecularWeight: "58.44 g/mol",
-      meltingPoint: "801°C",
-      form: "Crystalline Powder",
-      solubility: "Soluble in water",
-      storage: "Store in a cool, dry place",
-      hazards: ["Irritant"],
-      applications: ["Analytical Chemistry", "Food Analysis", "General Laboratory Use"]
-    },
-    price: {
-      value: 250,
-      currency: "INR",
-      unit: "500g"
-    },
-    stock: {
-      status: "in-stock",
-      quantity: 100,
-      unit: "bottles"
-    }
+    id: "sodium-chloride",
+    name: "Sodium Chloride",
+    casNumber: "7647-14-5",
+    manufacturer: "Sigma-Aldrich",
+    description: "High purity sodium chloride suitable for analytical and laboratory use.",
+    category: "inorganic-chemicals",
+    purity: "≥99.5%",
+    grade: "ACS Reagent",
+    packagingSizes: [
+      { id: "nacl-500g", size: "500", unit: "g", sku: "S7653-500G" },
+      { id: "nacl-1kg", size: "1", unit: "kg", sku: "S7653-1KG" }
+    ],
+    specifications: [
+      "Assay: ≥99.5%",
+      "Heavy Metals: ≤5 ppm",
+      "Loss on Drying: ≤0.5%"
+    ],
+    applications: [
+      "Buffer preparation",
+      "General laboratory use",
+      "Food analysis"
+    ],
+    msdsUrl: "/msds/sodium-chloride.pdf",
+    imageUrl: "/images/products/sodium-chloride.svg",
+    inStock: true,
+    featured: true
   },
   {
-    id: "methanol-hplc",
-    name: "Methanol HPLC Grade",
-    brand: "SRL",
-    category: "analytical-reagents",
-    subcategory: "HPLC Solvents",
-    catalogNumber: "138650",
-    description: "Ultra pure methanol specially purified and tested for HPLC applications. Ensures reliable chromatographic separations.",
-    image: "/images/products/chemicals/methanol-hplc.jpg",
-    fallbackImage: "/images/products/placeholder-chemical.jpg",
-    specifications: {
-      grade: "HPLC Grade",
-      purity: "≥99.9%",
-      packaging: "2.5L",
-      casNumber: "67-56-1",
-      molecularWeight: "32.04 g/mol",
-      boilingPoint: "64.7°C",
-      density: "0.791-0.793 g/mL at 20°C",
-      form: "Liquid",
-      storage: "Store in a cool place",
-      hazards: ["Highly Flammable", "Toxic"],
-      applications: ["HPLC Analysis", "Spectroscopy", "General Laboratory Use"]
-    },
-    price: {
-      value: 1200,
-      currency: "INR",
-      unit: "2.5L"
-    },
-    stock: {
-      status: "in-stock",
-      quantity: 50,
-      unit: "bottles"
-    }
-  },
-  {
-    id: "peptone-bacteriological",
-    name: "Peptone Bacteriological",
-    brand: "SRL",
-    category: "life-science",
-    subcategory: "Culture Media",
-    catalogNumber: "164321",
-    description: "High-quality peptone for microbiological culture media. Ensures optimal growth of microorganisms.",
-    image: "/images/products/life-science/peptone.jpg",
-    fallbackImage: "/images/products/placeholder-chemical.jpg",
-    specifications: {
-      grade: "Bacteriological Grade",
-      form: "Powder",
-      packaging: "500g",
-      solubility: "Soluble in water",
-      storage: "Store at 2-8°C",
-      applications: ["Microbiology", "Cell Culture", "Fermentation"]
-    },
-    price: {
-      value: 1800,
-      currency: "INR",
-      unit: "500g"
-    },
-    stock: {
-      status: "low-stock",
-      quantity: 10,
-      unit: "bottles"
-    }
+    id: "methanol",
+    name: "Methanol",
+    casNumber: "67-56-1",
+    manufacturer: "Merck",
+    description: "HPLC grade methanol for analytical and chromatography applications.",
+    category: "solvents",
+    purity: "≥99.9%",
+    grade: "HPLC",
+    packagingSizes: [
+      { id: "meoh-1l", size: "1", unit: "L", sku: "M1234-1L" },
+      { id: "meoh-2.5l", size: "2.5", unit: "L", sku: "M1234-2.5L" }
+    ],
+    specifications: [
+      "Purity (GC): ≥99.9%",
+      "Water Content: ≤0.03%",
+      "Residue after Evaporation: ≤0.0005%"
+    ],
+    applications: [
+      "HPLC mobile phase",
+      "Analytical chemistry",
+      "Organic synthesis"
+    ],
+    msdsUrl: "/msds/methanol.pdf",
+    imageUrl: "/images/products/methanol.svg",
+    inStock: true
   }
 ]
 
-export function searchProducts(query: string): Product[] {
+export const searchProducts = (query: string): Product[] => {
   const searchTerm = query.toLowerCase()
-  return featuredProducts.filter(product => {
-    return (
-      product.name.toLowerCase().includes(searchTerm) ||
-      product.description.toLowerCase().includes(searchTerm) ||
-      product.category.toLowerCase().includes(searchTerm) ||
-      product.subcategory.toLowerCase().includes(searchTerm) ||
-      product.brand.toLowerCase().includes(searchTerm) ||
-      product.catalogNumber.toLowerCase().includes(searchTerm) ||
-      product.specifications.casNumber?.toLowerCase().includes(searchTerm)
-    )
-  })
+  return products.filter(product => 
+    product.name.toLowerCase().includes(searchTerm) ||
+    product.description.toLowerCase().includes(searchTerm) ||
+    product.casNumber.toLowerCase().includes(searchTerm)
+  )
 }
+
+export const getProductById = (id: string): Product | undefined => {
+  return products.find(product => product.id === id)
+}
+
+export const getProductCategories = () => [
+  { id: "organic-chemicals", name: "Organic Chemicals" },
+  { id: "inorganic-chemicals", name: "Inorganic Chemicals" },
+  { id: "solvents", name: "Solvents" },
+  { id: "reagents", name: "Reagents" },
+  { id: "analytical-standards", name: "Analytical Standards" },
+  { id: "laboratory-glassware", name: "Laboratory Glassware" }
+]

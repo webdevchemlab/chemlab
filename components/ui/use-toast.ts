@@ -27,4 +27,18 @@ export function useToast() {
   }
 
   return { toast }
+}
+
+// Export the toast function directly
+export const toast = ({ title, description, variant = "default" }: ToastProps) => {
+  const id = genId()
+  const event = new CustomEvent("toast", {
+    detail: {
+      id,
+      title,
+      description,
+      variant,
+    },
+  })
+  document.dispatchEvent(event)
 } 
