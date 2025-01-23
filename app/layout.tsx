@@ -7,10 +7,21 @@ import Footer from '@/components/layout/footer'
 import { metadata } from "./metadata"
 import { cn } from "@/lib/utils"
 
-const inter = Inter({ subsets: ['latin'] })
+const inter = Inter({
+  subsets: ['latin'],
+  display: 'swap',
+  fallback: ['system-ui', '-apple-system', 'Segoe UI', 'Roboto', 'sans-serif'],
+  preload: true,
+  adjustFontFallback: true,
+})
+
 const manrope = Manrope({ 
   subsets: ["latin"],
   variable: "--font-manrope",
+  display: 'swap',
+  fallback: ['system-ui', '-apple-system', 'Segoe UI', 'Roboto', 'sans-serif'],
+  preload: true,
+  adjustFontFallback: true,
 })
 
 export { metadata }
