@@ -17,6 +17,29 @@ const nextConfig = {
   },
   // Disable SWC minification
   swcMinify: false,
+  webpack: (config, { isServer }) => {
+    if (!isServer) {
+      config.resolve.fallback = {
+        ...config.resolve.fallback,
+        fs: false,
+        net: false,
+        tls: false,
+        crypto: false,
+        os: false,
+        path: false,
+        stream: false,
+        util: false,
+        buffer: false,
+        http: false,
+        https: false,
+        url: false,
+      };
+    }
+    return config;
+  },
+  experimental: {
+    serverComponentsExternalPackages: ['firebase', 'firebase-admin']
+  }
 };
 
 module.exports = nextConfig;
