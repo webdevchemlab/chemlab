@@ -54,9 +54,12 @@ export const products: Product[] = [
     ],
     msdsUrl: "/msds/methanol.pdf",
     imageUrl: "/images/products/methanol.svg",
-    inStock: true
+    inStock: true,
+    featured: true
   }
 ]
+
+export const featuredProducts = products.filter(product => product.featured)
 
 export const searchProducts = (query: string): Product[] => {
   const searchTerm = query.toLowerCase()
@@ -69,6 +72,10 @@ export const searchProducts = (query: string): Product[] => {
 
 export const getProductById = (id: string): Product | undefined => {
   return products.find(product => product.id === id)
+}
+
+export const getProductsByCategory = (categoryId: string): Product[] => {
+  return products.filter(product => product.category === categoryId)
 }
 
 export const getProductCategories = () => [

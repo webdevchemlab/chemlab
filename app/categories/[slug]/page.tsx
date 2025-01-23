@@ -1,21 +1,20 @@
 import { BeakerIcon } from "lucide-react"
-import { categories } from "@/data/categories"
-import { products } from "@/data/products"
+import { getProductCategories, getProductsByCategory } from "@/data/products"
 import Image from "next/image"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 
 export async function generateStaticParams() {
+  const categories = getProductCategories()
   return categories.map((category) => ({
     slug: category.id,
   }))
 }
 
 export default function CategoryPage({ params }: { params: { slug: string } }) {
+  const categories = getProductCategories()
   const category = categories.find(cat => cat.id === params.slug)
-  const categoryProducts = products.filter(product => 
-    product.categories.includes(params.slug)
-  )
+  const categoryProducts = getProductsByCategory(params.slug)
 
   if (!category) {
     return (
@@ -32,7 +31,7 @@ export default function CategoryPage({ params }: { params: { slug: string } }) {
       <div className="container mx-auto px-4">
         <div className="mb-8 flex items-center space-x-4">
           <div className="rounded-lg bg-slate-900 p-3">
-            {category.icon && <category.icon className="h-8 w-8 text-cyan-500" />}
+            <BeakerIcon className="h-8 w-8 text-cyan-500" />
           </div>
           <h1 className="text-3xl font-bold text-slate-100">{category.name}</h1>
         </div>
@@ -41,9 +40,9 @@ export default function CategoryPage({ params }: { params: { slug: string } }) {
           {categoryProducts.map((product) => (
             <div key={product.id} className="group relative overflow-hidden rounded-lg bg-slate-900/50 p-6">
               <div className="mb-4 aspect-square relative rounded-lg bg-slate-800/50">
-                {product.image ? (
+                {product.imageUrl ? (
                   <Image
-                    src={product.image}
+                    src={product.imageUrl}
                     alt={product.name}
                     fill
                     className="object-cover rounded-lg"
@@ -60,16 +59,16 @@ export default function CategoryPage({ params }: { params: { slug: string } }) {
                 <Button
                   variant="outline"
                   className="text-cyan-500 border-cyan-500/20 hover:bg-cyan-500/10"
-                  onClick={() => window.location.href = `/products/products/${product.id}`}
+                  asChild
                 >
-                  View Details
+                  <Link href={`/products/${product.id}`}>View Details</Link>
                 </Button>
                 <Button
                   variant="default"
                   className="bg-cyan-500 hover:bg-cyan-600 text-white"
-                  onClick={() => window.location.href = `/products/quote-request?product=${product.id}`}
+                  asChild
                 >
-                  Request Quote
+                  <Link href={`/quote-request?product=${product.id}`}>Request Quote</Link>
                 </Button>
               </div>
             </div>
