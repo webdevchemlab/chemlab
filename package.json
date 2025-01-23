@@ -13,6 +13,9 @@
   },
   "dependencies": {
     "@hookform/resolvers": "3.3.2",
+    "@payloadcms/bundler-webpack": "^1.0.7",
+    "@payloadcms/db-mongodb": "^3.18.0",
+    "@payloadcms/richtext-slate": "^3.18.0",
     "@radix-ui/react-accordion": "1.1.2",
     "@radix-ui/react-alert-dialog": "1.0.5",
     "@radix-ui/react-aspect-ratio": "1.0.3",
