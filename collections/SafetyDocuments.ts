@@ -1,4 +1,4 @@
-import { CollectionConfig } from 'payload/types';
+import type { CollectionConfig } from 'payload';
 
 export const SafetyDocuments: CollectionConfig = {
   slug: 'safety-documents',
