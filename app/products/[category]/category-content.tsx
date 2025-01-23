@@ -19,8 +19,8 @@ export default function CategoryContent({ categoryId }: { categoryId: string }) 
   // Filter products by category
   const categoryProducts = featuredProducts.filter(product => 
     product.category === categoryId &&
-    (selectedSubcategories.length === 0 || selectedSubcategories.includes(product.subcategory)) &&
-    (selectedBrands.length === 0 || selectedBrands.includes(product.brand))
+    (selectedSubcategories.length === 0 || (product.subCategory && selectedSubcategories.includes(product.subCategory))) &&
+    (selectedBrands.length === 0 || selectedBrands.includes(product.manufacturer))
   )
 
   // Filter products by search query
@@ -28,7 +28,7 @@ export default function CategoryContent({ categoryId }: { categoryId: string }) 
     searchQuery === "" ||
     product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
     product.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    product.specifications.casNumber?.toLowerCase().includes(searchQuery.toLowerCase())
+    product.casNumber.toLowerCase().includes(searchQuery.toLowerCase())
   )
 
   const toggleSubcategory = (subcategory: string) => {
@@ -105,9 +105,9 @@ export default function CategoryContent({ categoryId }: { categoryId: string }) 
                 </div>
               </div>
 
-              {/* Brands */}
+              {/* Manufacturers */}
               <div className="mb-8">
-                <h3 className="text-sm font-medium text-slate-300 mb-4">Brands</h3>
+                <h3 className="text-sm font-medium text-slate-300 mb-4">Manufacturers</h3>
                 <div className="space-y-2">
                   {brands.map(brand => (
                     <label
@@ -174,24 +174,34 @@ export default function CategoryContent({ categoryId }: { categoryId: string }) 
                     <h3 className="text-lg font-semibold text-slate-100 group-hover:text-cyan-400 transition-colors">
                       {product.name}
                     </h3>
-                    <div className="text-sm text-cyan-500 mb-2">{product.brand}</div>
+                    <div className="text-sm text-cyan-500 mb-2">{product.manufacturer}</div>
                     <p className="text-sm text-slate-400 mb-4 line-clamp-2">
                       {product.description}
                     </p>
                   </div>
                   <div className="space-y-2">
-                    {Object.entries(product.specifications).slice(0, 4).map(([key, value]) => (
-                      <div key={key} className="flex items-center justify-between text-sm">
-                        <span className="text-slate-500 capitalize">{key}:</span>
-                        <span className="text-slate-300">{value}</span>
+                    <div className="flex items-center justify-between text-sm">
+                      <span className="text-slate-500">CAS Number:</span>
+                      <span className="text-slate-300">{product.casNumber}</span>
+                    </div>
+                    {product.grade && (
+                      <div className="flex items-center justify-between text-sm">
+                        <span className="text-slate-500">Grade:</span>
+                        <span className="text-slate-300">{product.grade}</span>
                       </div>
-                    ))}
+                    )}
+                    {product.purity && (
+                      <div className="flex items-center justify-between text-sm">
+                        <span className="text-slate-500">Purity:</span>
+                        <span className="text-slate-300">{product.purity}</span>
+                      </div>
+                    )}
                   </div>
                   <div className="mt-6 flex items-center justify-between">
                     <Button
                       variant="outline"
                       className="text-cyan-500 border-cyan-500/20 hover:bg-cyan-500/10"
-                      onClick={() => window.location.href = `/products/products/${product.id}`}
+                      onClick={() => window.location.href = `/products/${product.category}/${product.id}`}
                     >
                       View Details
                     </Button>
