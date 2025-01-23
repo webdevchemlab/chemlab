@@ -1,3 +1,5 @@
+"use client"
+
 import { featuredProducts } from "@/data/products"
 import ProductContent from "./product-content"
 
@@ -8,5 +10,6 @@ export async function generateStaticParams() {
 }
 
 export default function ProductPage({ params }: { params: { id: string } }) {
-  return <ProductContent productId={params.id} />
+  const product = featuredProducts.find(p => p.id === params.id)
+  return <ProductContent product={product} />
 }
