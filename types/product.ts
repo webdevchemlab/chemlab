@@ -4,7 +4,9 @@ export type ProductCategory =
   | "solvents"
   | "reagents"
   | "analytical-standards"
-  | "laboratory-glassware";
+  | "laboratory-glassware"
+  | "lab-equipment"
+  | "consumables";
 
 export interface PackagingSize {
   id: string;

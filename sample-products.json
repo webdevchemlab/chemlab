@@ -1,0 +1,116 @@
+[
+  {
+    "name": "Ethanol",
+    "casNumber": "64-17-5",
+    "manufacturer": "Merck",
+    "description": "Absolute ethanol for analytical and laboratory applications. High purity grade suitable for chromatography and spectroscopy.",
+    "category": "solvents",
+    "purity": "≥99.8%",
+    "grade": "Analytical Reagent",
+    "packagingSizes": [
+      {
+        "id": "ethanol-1l",
+        "size": "1",
+        "unit": "L",
+        "sku": "ETH-1L"
+      },
+      {
+        "id": "ethanol-2.5l",
+        "size": "2.5",
+        "unit": "L",
+        "sku": "ETH-2.5L"
+      }
+    ],
+    "specifications": [
+      "Purity (GC): ≥99.8%",
+      "Water Content: ≤0.1%",
+      "Residue after Evaporation: ≤0.001%"
+    ],
+    "applications": [
+      "Chromatography",
+      "Spectroscopy",
+      "Organic synthesis",
+      "Cleaning and sterilization"
+    ],
+    "msdsUrl": "/msds/ethanol.pdf",
+    "imageUrl": "/images/products/ethanol.svg",
+    "inStock": true,
+    "featured": true
+  },
+  {
+    "name": "Hydrochloric Acid",
+    "casNumber": "7647-01-0",
+    "manufacturer": "SRL",
+    "description": "Concentrated hydrochloric acid for laboratory and industrial applications. High purity grade for analytical chemistry.",
+    "category": "inorganic-chemicals",
+    "purity": "36-38%",
+    "grade": "Laboratory Reagent",
+    "packagingSizes": [
+      {
+        "id": "hcl-500ml",
+        "size": "500",
+        "unit": "mL",
+        "sku": "HCL-500ML"
+      },
+      {
+        "id": "hcl-1l",
+        "size": "1",
+        "unit": "L",
+        "sku": "HCL-1L"
+      }
+    ],
+    "specifications": [
+      "Assay: 36-38%",
+      "Heavy Metals: ≤5 ppm",
+      "Iron: ≤2 ppm"
+    ],
+    "applications": [
+      "pH adjustment",
+      "Acid-base reactions",
+      "Cleaning and etching",
+      "Analytical chemistry"
+    ],
+    "msdsUrl": "/msds/hydrochloric-acid.pdf",
+    "imageUrl": "/images/products/hydrochloric-acid.svg",
+    "inStock": true,
+    "featured": false
+  },
+  {
+    "name": "Sodium Hydroxide",
+    "casNumber": "1310-73-2",
+    "manufacturer": "Sigma-Aldrich",
+    "description": "High purity sodium hydroxide pellets for analytical and laboratory use. Suitable for titration and pH adjustment.",
+    "category": "inorganic-chemicals",
+    "purity": "≥97%",
+    "grade": "ACS Reagent",
+    "packagingSizes": [
+      {
+        "id": "naoh-500g",
+        "size": "500",
+        "unit": "g",
+        "sku": "NAOH-500G"
+      },
+      {
+        "id": "naoh-1kg",
+        "size": "1",
+        "unit": "kg",
+        "sku": "NAOH-1KG"
+      }
+    ],
+    "specifications": [
+      "Assay: ≥97%",
+      "Carbonate: ≤2%",
+      "Insoluble Matter: ≤0.01%"
+    ],
+    "applications": [
+      "pH adjustment",
+      "Titration",
+      "Saponification reactions",
+      "Cleaning solutions"
+    ],
+    "msdsUrl": "/msds/sodium-hydroxide.pdf",
+    "imageUrl": "/images/products/sodium-hydroxide.svg",
+    "inStock": true,
+    "featured": false
+  }
+] 

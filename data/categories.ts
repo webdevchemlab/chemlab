@@ -1,4 +1,4 @@
-import { FlaskConical, Microscope, Atom, HeartPulse, Pill, TestTube, Thermometer } from "lucide-react"
+import { FlaskConical, Microscope, Atom, HeartPulse, Pill, TestTube, Thermometer, Beaker, Settings, Package } from "lucide-react"
 
 export interface Category {
   id: string
@@ -14,9 +14,9 @@ export interface Category {
 
 export const categories = [
   {
-    id: "fine-chemicals",
-    name: "Fine Chemicals",
-    description: "High-purity chemicals for research, analysis, and synthesis",
+    id: "organic-chemicals",
+    name: "Organic Chemicals",
+    description: "High-purity organic chemicals for research, analysis, and synthesis",
     icon: FlaskConical,
     subcategories: [
       {
@@ -30,88 +30,78 @@ export const categories = [
         description: "High purity organic chemicals for synthesis and research"
       },
       {
-        id: "inorganic-compounds",
-        name: "Inorganic Compounds",
-        description: "Pure inorganic chemicals and compounds"
-      },
-      {
-        id: "solvents",
-        name: "Solvents",
-        description: "High purity solvents for various applications"
+        id: "reagents",
+        name: "Organic Reagents",
+        description: "Reagents for organic synthesis and analysis"
       }
     ]
   },
   {
-    id: "analytical-reagents",
-    name: "Analytical Reagents",
-    description: "Premium grade reagents for precise analytical applications",
+    id: "inorganic-chemicals",
+    name: "Inorganic Chemicals",
+    description: "Pure inorganic chemicals and compounds for laboratory use",
     icon: Atom,
     subcategories: [
       {
-        id: "ar-grade",
-        name: "AR Grade Chemicals",
-        description: "Analytical reagent grade chemicals for accurate analysis"
+        id: "salts",
+        name: "Inorganic Salts",
+        description: "High purity inorganic salts and compounds"
       },
+      {
+        id: "acids",
+        name: "Inorganic Acids",
+        description: "Concentrated inorganic acids"
+      },
+      {
+        id: "bases",
+        name: "Inorganic Bases",
+        description: "Inorganic bases and hydroxides"
+      },
+      {
+        id: "oxides",
+        name: "Metal Oxides",
+        description: "Metal oxides and related compounds"
+      }
+    ]
+  },
+  {
+    id: "solvents",
+    name: "Solvents",
+    description: "High purity solvents for chromatography, analysis, and synthesis",
+    icon: Beaker,
+    subcategories: [
       {
         id: "hplc-solvents",
         name: "HPLC Solvents",
         description: "Ultra pure solvents for HPLC applications"
       },
       {
-        id: "volumetric-solutions",
-        name: "Volumetric Solutions",
-        description: "Standardized solutions for volumetric analysis"
+        id: "analytical-solvents",
+        name: "Analytical Solvents",
+        description: "High purity solvents for analytical chemistry"
       },
       {
-        id: "indicators",
-        name: "Indicators & Stains",
-        description: "Chemical indicators and staining solutions"
+        id: "organic-solvents",
+        name: "Organic Solvents",
+        description: "Common organic solvents for synthesis"
+      },
+      {
+        id: "aqueous-solvents",
+        name: "Aqueous Solvents",
+        description: "Water-based solvents and solutions"
       }
     ]
   },
   {
-    id: "life-science",
-    name: "Life Science Products",
-    description: "Specialized products for biological research and analysis",
-    icon: HeartPulse,
-    subcategories: [
-      {
-        id: "biochemicals",
-        name: "Biochemicals",
-        description: "Pure biochemicals for life science research"
-      },
-      {
-        id: "culture-media",
-        name: "Culture Media",
-        description: "Media and supplements for cell culture"
-      },
-      {
-        id: "molecular-biology",
-        name: "Molecular Biology",
-        description: "Reagents for molecular biology applications"
-      },
-      {
-        id: "antibiotics",
-        name: "Antibiotics",
-        description: "Antibiotics for research and media preparation"
-      }
-    ]
-  },
-  {
-    id: "lab-chemicals",
-    name: "Laboratory Chemicals",
-    description: "Essential chemicals for routine laboratory use",
+    id: "reagents",
+    name: "Reagents",
+    description: "Analytical and laboratory reagents for precise applications",
     icon: TestTube,
     subcategories: [
       {
-        id: "lr-grade",
-        name: "LR Grade Chemicals",
-        description: "Laboratory reagent grade chemicals"
-      },
-      {
-        id: "karl-fischer",
-        name: "Karl Fischer Reagents",
-        description: "Reagents for moisture determination"
+        id: "ar-grade",
+        name: "AR Grade Reagents",
+        description: "Analytical reagent grade chemicals"
       },
       {
         id: "buffer-solutions",
@@ -119,65 +109,121 @@ export const categories = [
         description: "Ready-to-use and concentrated buffer solutions"
       },
       {
-        id: "cleaning-solutions",
-        name: "Cleaning Solutions",
-        description: "Laboratory cleaning and maintenance solutions"
-      }
-    ]
-  },
-  {
-    id: "chromatography",
-    name: "Chromatography",
-    description: "Complete range of chromatography products and supplies",
-    icon: Thermometer,
-    subcategories: [
-      {
-        id: "hplc-columns",
-        name: "HPLC Columns",
-        description: "Analytical and preparative HPLC columns"
-      },
-      {
-        id: "tlc",
-        name: "TLC Products",
-        description: "TLC plates and development systems"
-      },
-      {
-        id: "gc-columns",
-        name: "GC Columns",
-        description: "Gas chromatography columns and accessories"
+        id: "indicators",
+        name: "Indicators & Stains",
+        description: "Chemical indicators and staining solutions"
       },
       {
         id: "standards",
-        name: "Standards & References",
-        description: "Chromatography standards and reference materials"
+        name: "Reference Standards",
+        description: "Certified reference materials and standards"
       }
     ]
   },
   {
-    id: "instruments",
-    name: "Laboratory Instruments",
-    description: "Precision instruments for accurate analysis and research",
+    id: "analytical-standards",
+    name: "Analytical Standards",
+    description: "Certified reference materials and analytical standards",
     icon: Microscope,
+    subcategories: [
+      {
+        id: "certified-standards",
+        name: "Certified Standards",
+        description: "Certified reference materials for analysis"
+      },
+      {
+        id: "calibration-standards",
+        name: "Calibration Standards",
+        description: "Standards for instrument calibration"
+      },
+      {
+        id: "quality-control",
+        name: "Quality Control",
+        description: "Materials for quality control procedures"
+      }
+    ]
+  },
+  {
+    id: "laboratory-glassware",
+    name: "Laboratory Glassware",
+    description: "High-quality laboratory glassware and equipment",
+    icon: Thermometer,
+    subcategories: [
+      {
+        id: "volumetric",
+        name: "Volumetric Glassware",
+        description: "Precision volumetric flasks, pipettes, and burettes"
+      },
+      {
+        id: "general-glassware",
+        name: "General Glassware",
+        description: "Beakers, flasks, and general laboratory glassware"
+      },
+      {
+        id: "chromatography",
+        name: "Chromatography Glassware",
+        description: "Specialized glassware for chromatography"
+      },
+      {
+        id: "accessories",
+        name: "Glassware Accessories",
+        description: "Stoppers, adapters, and other accessories"
+      }
+    ]
+  },
+  {
+    id: "lab-equipment",
+    name: "Laboratory Equipment",
+    description: "Professional laboratory equipment and instruments",
+    icon: Settings,
     subcategories: [
       {
         id: "analytical-instruments",
         name: "Analytical Instruments",
-        description: "Instruments for chemical analysis"
+        description: "Spectrophotometers, chromatographs, and analytical equipment"
       },
       {
-        id: "measuring-instruments",
-        name: "Measuring Instruments",
-        description: "Precision measurement devices"
+        id: "measurement-devices",
+        name: "Measurement Devices",
+        description: "Pipettes, balances, and precision measurement tools"
       },
       {
-        id: "lab-equipment",
-        name: "Lab Equipment",
-        description: "General laboratory equipment"
+        id: "heating-equipment",
+        name: "Heating Equipment",
+        description: "Hot plates, ovens, and heating devices"
       },
       {
-        id: "testing-equipment",
-        name: "Testing Equipment",
-        description: "Equipment for material testing"
+        id: "safety-equipment",
+        name: "Safety Equipment",
+        description: "Fume hoods, safety cabinets, and protective equipment"
+      }
+    ]
+  },
+  {
+    id: "consumables",
+    name: "Lab Consumables",
+    description: "Essential laboratory consumables and supplies",
+    icon: Package,
+    subcategories: [
+      {
+        id: "disposables",
+        name: "Disposable Items",
+        description: "Gloves, pipette tips, and disposable labware"
+      },
+      {
+        id: "storage-containers",
+        name: "Storage Containers",
+        description: "Tubes, bottles, and storage solutions"
+      },
+      {
+        id: "filters",
+        name: "Filters & Membranes",
+        description: "Filter papers, membranes, and filtration supplies"
+      },
+      {
+        id: "cleaning-supplies",
+        name: "Cleaning Supplies",
+        description: "Cleaning solutions and laboratory maintenance supplies"
       }
     ]
   }

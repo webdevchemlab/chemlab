@@ -7,8 +7,9 @@ import { Input } from "@/components/ui/input"
 import { Search, Filter, ChevronDown, BeakerIcon } from "lucide-react"
 import { categories } from "@/data/categories"
 import type { Product } from "@/types/product"
-import { featuredProducts, getProductsByCategory } from "@/data/products"
+import { products, getProductsByCategory } from "@/data/products"
 import { brands } from "@/data/brands"
+import { Breadcrumb } from "@/components/ui/breadcrumb"
 import Image from "next/image"
 import Link from "next/link"
 
@@ -23,7 +24,7 @@ export default function CategoryContent({ categoryId }: CategoryContentProps) {
   const [selectedBrands, setSelectedBrands] = useState<string[]>([])
   
   // Filter products by category
-  const categoryProducts = featuredProducts.filter(product => 
+  const categoryProducts = products.filter(product => 
     product.category === categoryId &&
     (selectedSubcategories.length === 0 || (product.subCategory && selectedSubcategories.includes(product.subCategory))) &&
     (selectedBrands.length === 0 || selectedBrands.includes(product.manufacturer))
@@ -66,6 +67,16 @@ export default function CategoryContent({ categoryId }: CategoryContentProps) {
   return (
     <div className="min-h-screen bg-slate-950 py-12">
       <div className="container mx-auto px-4">
+        {/* Breadcrumbs */}
+        <div className="mb-6">
+          <Breadcrumb 
+            items={[
+              { label: "Products", href: "/products" },
+              { label: category.name }
+            ]} 
+          />
+        </div>
+
         {/* Hero Section */}
         <motion.div
           className="mb-12 text-center"
@@ -122,8 +133,8 @@ export default function CategoryContent({ categoryId }: CategoryContentProps) {
                     >
                       <input
                         type="checkbox"
-                        checked={selectedBrands.includes(brand.id)}
-                        onChange={() => toggleBrand(brand.id)}
+                        checked={selectedBrands.includes(brand.name)}
+                        onChange={() => toggleBrand(brand.name)}
                         className="rounded border-slate-700 text-cyan-500 focus:ring-cyan-500"
                       />
                       <span>{brand.name}</span>
@@ -166,62 +177,87 @@ export default function CategoryContent({ categoryId }: CategoryContentProps) {
               </Button>
             </div>
 
-            {/* Products Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-              {filteredProducts.map((product, index) => (
-                <motion.div
-                  key={product.id}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
-                  className="group relative overflow-hidden rounded-lg bg-slate-900/50 p-6 hover:bg-slate-900/80 transition-all duration-300 border border-slate-800/50 hover:border-cyan-500/50"
-                >
-                  <div className="mb-4">
-                    <h3 className="text-lg font-semibold text-slate-100 group-hover:text-cyan-400 transition-colors">
-                      {product.name}
-                    </h3>
-                    <div className="text-sm text-cyan-500 mb-2">{product.manufacturer}</div>
-                    <p className="text-sm text-slate-400 mb-4 line-clamp-2">
-                      {product.description}
-                    </p>
-                  </div>
-                  <div className="space-y-2">
-                    <div className="flex items-center justify-between text-sm">
-                      <span className="text-slate-500">CAS Number:</span>
-                      <span className="text-slate-300">{product.casNumber}</span>
-                    </div>
-                    {product.grade && (
-                      <div className="flex items-center justify-between text-sm">
-                        <span className="text-slate-500">Grade:</span>
-                        <span className="text-slate-300">{product.grade}</span>
-                      </div>
-                    )}
-                    {product.purity && (
-                      <div className="flex items-center justify-between text-sm">
-                        <span className="text-slate-500">Purity:</span>
-                        <span className="text-slate-300">{product.purity}</span>
-                      </div>
-                    )}
-                  </div>
-                  <div className="mt-6 flex items-center justify-between">
-                    <Button
-                      variant="outline"
-                      className="text-cyan-500 border-cyan-500/20 hover:bg-cyan-500/10"
-                      onClick={() => window.location.href = `/products/${product.category}/${product.id}`}
-                    >
-                      View Details
-                    </Button>
-                    <Button
-                      variant="default"
-                      className="bg-cyan-500 hover:bg-cyan-600 text-white"
-                      onClick={() => window.location.href = `/quote-request?product=${product.id}`}
-                    >
-                      Request Quote
-                    </Button>
-                  </div>
-                </motion.div>
-              ))}
+            {/* Results Count */}
+            <div className="mb-6">
+              <p className="text-slate-400">
+                Showing {filteredProducts.length} of {categoryProducts.length} products in {category.name}
+                {searchQuery && ` for "${searchQuery}"`}
+              </p>
             </div>
+
+            {/* Products Grid */}
+            {filteredProducts.length > 0 ? (
+              <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+                {filteredProducts.map((product, index) => (
+                  <motion.div
+                    key={product.id}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: index * 0.1 }}
+                    className="group relative overflow-hidden rounded-lg bg-slate-900/50 p-6 hover:bg-slate-900/80 transition-all duration-300 border border-slate-800/50 hover:border-cyan-500/50"
+                  >
+                    <div className="mb-4">
+                      <h3 className="text-lg font-semibold text-slate-100 group-hover:text-cyan-400 transition-colors">
+                        {product.name}
+                      </h3>
+                      <div className="text-sm text-cyan-500 mb-2">{product.manufacturer}</div>
+                      <p className="text-sm text-slate-400 mb-4 line-clamp-2">
+                        {product.description}
+                      </p>
+                    </div>
+                    <div className="space-y-2">
+                      <div className="flex items-center justify-between text-sm">
+                        <span className="text-slate-500">CAS Number:</span>
+                        <span className="text-slate-300">{product.casNumber}</span>
+                      </div>
+                      {product.grade && (
+                        <div className="flex items-center justify-between text-sm">
+                          <span className="text-slate-500">Grade:</span>
+                          <span className="text-slate-300">{product.grade}</span>
+                        </div>
+                      )}
+                      {product.purity && (
+                        <div className="flex items-center justify-between text-sm">
+                          <span className="text-slate-500">Purity:</span>
+                          <span className="text-slate-300">{product.purity}</span>
+                        </div>
+                      )}
+                    </div>
+                    <div className="mt-6 flex items-center justify-between">
+                      <Button
+                        variant="outline"
+                        className="text-cyan-500 border-cyan-500/20 hover:bg-cyan-500/10"
+                        onClick={() => window.location.href = `/products/${product.category}/${product.id}`}
+                      >
+                        View Details
+                      </Button>
+                      <Button
+                        variant="default"
+                        className="bg-cyan-500 hover:bg-cyan-600 text-white"
+                        onClick={() => window.location.href = `/quote-request?product=${product.id}`}
+                      >
+                        Request Quote
+                      </Button>
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+            ) : (
+              <div className="text-center py-12">
+                <BeakerIcon className="h-12 w-12 text-slate-600 mx-auto mb-4" />
+                <h3 className="text-lg font-semibold text-slate-300 mb-2">No products found</h3>
+                <p className="text-slate-400 mb-4">
+                  Try adjusting your search terms or filters to find what you're looking for.
+                </p>
+                <Button variant="outline" onClick={() => {
+                  setSelectedSubcategories([])
+                  setSelectedBrands([])
+                  setSearchQuery("")
+                }}>
+                  Clear Filters
+                </Button>
+              </div>
+            )}
           </div>
         </div>
       </div>
